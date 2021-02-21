@@ -1,0 +1,104 @@
+{
+  "tabs": {
+    "home": "الرئيسيه",
+    "categories": "الأقسام",
+    "cart": "السله",
+    "account": "الحساب",
+    "offers": "العروض"
+  },
+  "homeScreen": {
+    "searchPlaceHolder": "ما الذي تريد البحث عنه"
+  },
+  "drawer": {
+    "menu": "القائمه",
+    "close": "غلق"
+  },
+  "caregoriesScreen": {},
+  "categoriesDetailesScreen": {
+    "filter": "فلتر",
+    "sort": "ترتيب",
+    "save": "حفظ",
+    "catigurie": "الصنف",
+    "marka": "العلامه",
+    "price": "السعر",
+    "size": "المقاس",
+    "color": "اللون",
+    "from": "من",
+    "to": "إلي",
+    "addToCart": "أضف إلي السله",
+    "removeFromCart": "حذف من السله"
+  },
+  "favouriteScreen": {
+    "favourite": "المفضله",
+    "emptyText": "لايوجد منتجات مفضله"
+  },
+  "productScreen": {
+    "productsInformation": "معلومات المنتج",
+    "productFeatures": "سمات المنتج",
+    "customerEvaluation": "تقيم العملاء",
+    "similarProducts": "منتجات مشابهه",
+    "seller": "البائع",
+    "seeAllReviews": "مشاهده كل التقيمات",
+    "reviews": "التقيمات",
+    "review": "تقييم المنتج"
+  },
+  "accountScreen": {
+    "personalInformation": "المعلومات الشخصيه",
+    "changeMyPassword": "تغير كلمه المرور",
+    "favourite": "المفضله",
+    "myPurchases": "مشترياتي",
+    "customerServices": "خدمه العملاء",
+    "hotLine": "الخط الساخن"
+  },
+  "myPurchases": {
+    "orderNumber": "رقم الطلب",
+    "orderDate": "تاريخ الطلب",
+    "numberOfProducts": "عدد المنتجات",
+    "orderStatus": "حاله الطلب",
+    "manufacturer": "المصنع",
+    "quantity": "الكميه"
+  },
+  "cart": {
+    "payNow": "إدفع الأن",
+    "total": "المجموع",
+    "emptyText": "لايوجد منتجات في السله"
+  },
+
+  "general": {
+    "apply": "تطبيق"
+  },
+  "inputs": {
+    "firstName": "الإسم الأول",
+    "lastName": "الإسم الأخير",
+    "email": "البريد الإلكتروني",
+    "telephone": "رقم الهاتف",
+    "password": "كلمه المرور",
+    "placeholder": "برجاء إدخال {{fieldName}}",
+    "name": "الاسم",
+    "newPassword": "كلمه المرور الجديده",
+    "confirmPassword": "تأكيد كلمه المرور",
+    "securityCode": "كود التفعيل",
+    "reviewComment": "التعليق"
+  },
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signUp": "تسجيل حساب جديد",
+    "forgetPassword": "نسيت كلمه المرور",
+    "alreadyHaveAccount": "لديك حساب بالفعل ؟",
+    "registerNow": "سجل الأن",
+    "continue": "متابعه",
+    "signOut": "تسجيل الخروج"
+  },
+  "validation": {
+    "required": "{{fieldName}} مطلوب",
+    "emailFormat": "صيغه بريد إلكتروني خطأه",
+    "minLength": "{{fieldName}} لابد أن يكون {{minLength}} حروف",
+    "confirmPassword": "لاتطابق {{fieldName}}"
+  },
+  "messages": {
+    "addedToCart": "تمت اضافته للسله",
+    "checkInfoAndRetry": "حدث خطأ برجاء التأكد من المعلومات والمحاوله مره اخري",
+    "noInternet": "...لايوجد إتصال بالإنترنت",
+    "noData": "لاتوجد منتجات"
+  }
+}

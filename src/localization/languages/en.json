@@ -1,0 +1,104 @@
+{
+  "tabs": {
+    "home": "home",
+    "categories": "categories",
+    "cart": "cart",
+    "account": "account",
+    "offers": "offers"
+  },
+  "homeScreen": {
+    "searchPlaceHolder": "What are you looking for?"
+  },
+  "drawer": {
+    "menu": "menu",
+    "close": "close"
+  },
+  "caregoriesScreen": {},
+  "categoriesDetailesScreen": {
+    "filter": "filter",
+    "sort": "sort",
+    "save": "save",
+    "catigurie": "catigurie",
+    "marka": "marka",
+    "price": "price",
+    "size": "size",
+    "color": "color",
+    "from": "from",
+    "to": "to",
+    "addToCart": "add to cart",
+    "removeFromCart": "remove from cart"
+  },
+  "favouriteScreen": {
+    "favourite": "favourite",
+    "emptyText": "no favourites"
+  },
+  "productScreen": {
+    "productsInformation": "products information",
+    "productFeatures": "product features",
+    "customerEvaluation": "customer evaluation",
+    "similarProducts": "similar products",
+    "seller": "seller",
+    "seeAllReviews": "see all reviews",
+    "reviews": "reviews",
+    "review": "review product"
+  },
+  "accountScreen": {
+    "personalInformation": "personal information",
+    "changeMyPassword": "change my password",
+    "favourite": "favourite",
+    "myPurchases": "my purchases",
+    "customerServices": "customer services",
+    "hotLine": "hot line"
+  },
+  "myPurchases": {
+    "orderNumber": "order number",
+    "orderDate": "order date",
+    "numberOfProducts": "number Of Products",
+    "orderStatus": "order status",
+    "manufacturer": "manufacturer",
+    "quantity": "quantity"
+  },
+  "cart": {
+    "payNow": "pay now",
+    "total": "total",
+    "emptyText": "no cart items found"
+  },
+
+  "general": {
+    "apply": "apply"
+  },
+  "inputs": {
+    "firstName": "first name",
+    "lastName": "last name",
+    "email": "email",
+    "telephone": "telephone",
+    "password": "password",
+    "placeholder": "PLEASE ENTER YOUR {{fieldName}}",
+    "name": "name",
+    "newPassword": "new password",
+    "confirmPassword": "confirm password",
+    "securityCode": "security code",
+    "reviewComment": "comment"
+  },
+  "auth": {
+    "signIn": "sign in",
+    "signUp": "sign up",
+    "forgetPassword": "forget password",
+    "alreadyHaveAccount": "already have account ?",
+    "registerNow": "register now",
+    "continue": "continue",
+    "signOut": "sign out"
+  },
+  "validation": {
+    "required": "{{fieldName}} is required",
+    "emailFormat": "invalid email format",
+    "minLength": "{{fieldName}} must be at least {{minLength}} chars",
+    "confirmPassword": "don't match{{fieldName}}"
+  },
+  "messages": {
+    "addedToCart": "added to cart",
+    "checkInfoAndRetry": "something went wrong please check informations and try again",
+    "noInternet": "no internet... ",
+    "noData": "no حقخيعؤفس founded"
+  }
+}
