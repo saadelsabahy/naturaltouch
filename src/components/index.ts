@@ -28,3 +28,4 @@ export * from './ListEmptyComponent';
 export * from './NoInternet';
 export * from './FilterFromTo';
 export * from './AddReviewModal';
+export * from './IncreaseAndDecrease';

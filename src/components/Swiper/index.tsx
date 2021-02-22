@@ -12,7 +12,11 @@ import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FastImage from 'react-native-fast-image';
 import {COLORS} from '../../constants/style';
-import {SCREEN_HEIGHT, SWIPER_HEIGHT} from '../../constants/style/sizes';
+import {
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  SWIPER_HEIGHT,
+} from '../../constants/style/sizes';
 const {width} = Dimensions.get('window');
 interface swiperImage {
   imagelinkType?: string;
@@ -33,6 +37,7 @@ const CustomSwiper = ({
   onImagePressed,
   images = [],
   product,
+  ...props
 }: props) => {
   return (
     <Swiper
@@ -45,12 +50,16 @@ const CustomSwiper = ({
       dot={<View style={[styles.dot]} />}
       activeDot={<View style={[styles.activeDot]} />}
       //loadMinimal={true}
-      autoplay
       automaticallyAdjustContentInsets={true}
       showsButtons={showButtons}
       paginationStyle={{
         bottom: -0.15,
         flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+        backgroundColor: 'rgba(0,0,0,.5)',
+        width: 20 * images.length,
+        borderRadius: 15,
+        alignSelf: 'center',
+        start: SCREEN_WIDTH / 2.8,
       }}
       buttonWrapperStyle={{
         flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
@@ -71,7 +80,8 @@ const CustomSwiper = ({
           iconContainerStyle={styles.buttonsContainer}
           style={{opacity: 0.8, end: -10}}
         />
-      }>
+      }
+      {...props}>
       {images.map((image, index) => {
         return (
           <Pressable
@@ -119,7 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.MAINCOLOR,
   },
   activeDot: {
-    backgroundColor: COLORS.MAINCOLOR,
+    backgroundColor: COLORS.WHITE,
     width: 10,
     height: 10,
     borderRadius: 5,

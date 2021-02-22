@@ -6,6 +6,7 @@ import {
   CategoryNameAndAvatar,
   CustomSwiper,
   Loader,
+  ProductCard,
 } from '../../components';
 import {HomeScreenProps} from '../../interfaces/navigation';
 import Section from './Section';
@@ -21,6 +22,7 @@ import Reactotron from 'reactotron-react-native';
 import {AuthenticationContext} from '../../contexts';
 import {SCREEN_HEIGHT, SWIPER_HEIGHT} from '../../constants/style/sizes';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import HorizontalList from './HorizontalList';
 interface Props {
   navigation: HomeScreenProps;
 }
@@ -99,12 +101,10 @@ const Home: React.FC<Props> = ({navigation}) => {
                       onImagePressed={onHomeItemPressed}
                     />
                   </Section>
-                  <Section>
-                    <FlatList
+                  <Section key={section.SectionCodeName + 'footerCategories'}>
+                    <HorizontalList
                       data={categories}
-                      horizontal
-                      showsHorizontalScrollIndicator={false}
-                      keyExtractor={(item, index) => `${index}`}
+                      keyExtractor={(item, index) => `${item.category_id}`}
                       renderItem={({item: {name, image}, item}) => {
                         return (
                           <CategoryNameAndAvatar
@@ -137,10 +137,22 @@ const Home: React.FC<Props> = ({navigation}) => {
                 <Section
                   key={section.SectionCodeName + index}
                   title={section.title}>
-                  <HomeGrid
-                    data={section.products}
-                    onImagePressed={onHomeItemPressed}
-                    product
+                  <HorizontalList
+                    data={section?.products}
+                    keyExtractor={(item, index) => `${item.productId}`}
+                    renderItem={({item}) => {
+                      return (
+                        <ProductCard
+                          productName={item.name}
+                          images={[{slideimage: item.thumb}]}
+                          rating={item?.rating}
+                          price={`${item.price} ${item.currency}`}
+                          id={item.product_id}
+                          onProductPressed={() => onHomeItemPressed(item)}
+                          quantity={item.quantity}
+                        />
+                      );
+                    }}
                   />
                 </Section>
               ) : null;

@@ -4,7 +4,7 @@ import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
-import {Cart, Categories, Home, Offers} from '../screens';
+import {Account, Cart, Categories, Home, Offers} from '../screens';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS} from '../constants/style';
 import AuthStack from './AuthStack';
@@ -53,15 +53,41 @@ const tabBarOPtions = ({
 };
 const Tabs = () => {
   const {t, i18n} = useTranslation();
-  const {cartProducts} = useContext(cartContext);
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      backBehavior="initialRoute"
+      backBehavior="none"
       tabBarOptions={{
         keyboardHidesTabBar: true,
         style: {height: SCREEN_HEIGHT / 11},
+        inactiveTintColor: COLORS.MAINCOLOR,
       }}>
+      <Tab.Screen
+        name="More"
+        component={Account}
+        options={{
+          ...tabBarOPtions({
+            iconName: 'menu',
+            label: t('tabs:cart'),
+          }),
+
+          tabBarBadgeStyle: {
+            backgroundColor: COLORS.MAINCOLOR,
+            color: COLORS.WHITE,
+          },
+        }}
+      />
+      <Tab.Screen
+        name="AccountStack"
+        component={AuthStack}
+        options={{
+          ...tabBarOPtions({
+            iconName: 'file-account-outline',
+            label: t('tabs:account'),
+          }),
+        }}
+      />
+
       <Tab.Screen
         name="Home"
         component={Home}
@@ -76,32 +102,6 @@ const Tabs = () => {
           ...tabBarOPtions({
             iconName: 'view-grid-outline',
             label: t('tabs:categories'),
-          }),
-        }}
-      />
-      <Tab.Screen
-        name="Cart"
-        component={Cart}
-        options={{
-          ...tabBarOPtions({
-            iconName: 'basket-outline',
-            label: t('tabs:cart'),
-          }),
-
-          tabBarBadge: cartProducts?.products?.length || undefined,
-          tabBarBadgeStyle: {
-            backgroundColor: COLORS.MAINCOLOR,
-            color: COLORS.WHITE,
-          },
-        }}
-      />
-      <Tab.Screen
-        name="AccountStack"
-        component={AuthStack}
-        options={{
-          ...tabBarOPtions({
-            iconName: 'file-account-outline',
-            label: t('tabs:account'),
           }),
         }}
       />

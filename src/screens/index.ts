@@ -13,3 +13,4 @@ export * from './ForgetPassword';
 export * from './MyPurchases';
 export * from './OrderDetailes';
 export * from './Reviews';
+export * from './ChooseLanguage';

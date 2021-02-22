@@ -8,6 +8,7 @@ import {
   STORE_DATA,
   USER_NAME,
   SIGN_UP,
+  FIRST_INSTALL,
 } from './types';
 import axios from 'axios';
 import {
@@ -41,6 +42,7 @@ interface AuthContextInitialStateTypes {
   settings?: settingsTypes;
   cookie?: string;
   userName: string;
+  firstInstall?: boolean;
 }
 const initialState: AuthContextInitialStateTypes = {
   isLoading: true,
@@ -70,7 +72,9 @@ type contextType = {
   authContext: AuthContextType;
   state: AuthContextInitialStateTypes;
 };
-export const AuthenticationContext = React.createContext<contextType>({});
+export const AuthenticationContext = React.createContext<contextType>(
+  {} as contextType,
+);
 const reducer = (
   state: AuthContextInitialStateTypes = initialState,
   {type, payload}: AuthReducerActionType,
@@ -86,6 +90,7 @@ const reducer = (
         cookie: payload.cookie,
         userName: payload.userName,
         isSignout: !!payload.userToken,
+        firstInstall: !!payload.firstInstall,
       };
       break;
     case SIGN_IN:
@@ -136,18 +141,12 @@ const AuthContext: React.FC = ({children}: {children?: ReactNode}) => {
         const userToken = await AsyncStorage.getItem(USER_TOKEN);
         const storeData = await AsyncStorage.getItem(STORE_DATA);
         const userName = await AsyncStorage.getItem(USER_NAME);
+        const firstInstall = await AsyncStorage.getItem(FIRST_INSTALL);
         try {
           if (storeData) {
             const parseStoreData: storeDataTypes = await JSON.parse(storeData);
             // console.log({parseStoreData});
-            if (
-              parseStoreData.settings.LanguageCode == 'ar' &&
-              !I18nManager.isRTL
-            ) {
-              await i18next.changeLanguage(
-                parseStoreData.settings.LanguageCode,
-              );
-            }
+
             dispatch({
               type: RESTORE_TOKEN,
               payload: {
@@ -155,6 +154,7 @@ const AuthContext: React.FC = ({children}: {children?: ReactNode}) => {
                 storeToken: parseStoreData.token,
                 ...parseStoreData,
                 userName,
+                firstInstall: !!firstInstall,
               },
             });
           } else {
@@ -174,15 +174,14 @@ const AuthContext: React.FC = ({children}: {children?: ReactNode}) => {
 
             dispatch({
               type: RESTORE_TOKEN,
-              payload: {userToken, storeToken: token, settings, cookie},
+              payload: {
+                userToken,
+                storeToken: token,
+                settings,
+                cookie,
+                firstInstall: !!firstInstall,
+              },
             });
-
-            if (
-              settings.LanguageCode &&
-              i18next.language !== settings.LanguageCode
-            ) {
-              await i18next.changeLanguage(settings.LanguageCode);
-            }
           }
         } catch (error) {
           console.log('restore token error', error);

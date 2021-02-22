@@ -99,6 +99,10 @@
     "addedToCart": "added to cart",
     "checkInfoAndRetry": "something went wrong please check informations and try again",
     "noInternet": "no internet... ",
-    "noData": "no حقخيعؤفس founded"
+    "noData": "no data founded"
+  },
+  "localization": {
+    "language": "english",
+    "chooseLang": "choose your language"
   }
 }

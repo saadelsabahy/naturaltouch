@@ -16,7 +16,12 @@ type getCartProductsResponseType =
   | {products: []; totals: {title: string; text: string}[]}
   | undefined;
 interface productContextDefaultValue {
-  addToCart: (id: string, name: string, options?: object) => void;
+  addToCart: (
+    id: string,
+    name: string,
+    options?: object,
+    quantity?: number,
+  ) => void;
   cartProducts: getCartProductsResponseType;
   isCartLoading: boolean;
   getCartProductsError: boolean;
@@ -25,7 +30,9 @@ interface productContextDefaultValue {
   onChangeAmount: (quantity: number, key: number) => void;
   reftchCart: () => void;
 }
-export const cartContext = React.createContext<productContextDefaultValue>({});
+export const cartContext = React.createContext<productContextDefaultValue>(
+  {} as productContextDefaultValue,
+);
 const CartProvider = ({children}: Props) => {
   const {
     state: {storeToken, settings},
@@ -53,7 +60,7 @@ const CartProvider = ({children}: Props) => {
   );
 
   const addToCart = useCallback(
-    async (product_id, name, option) => {
+    async (product_id, name, option, quantity = 1) => {
       try {
         if (product_id) {
           const {

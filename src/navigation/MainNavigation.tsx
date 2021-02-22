@@ -11,6 +11,7 @@ import {
   MyPurchases,
   OrderDetailes,
   Reviews,
+  Cart,
 } from '../screens';
 import AuthStack from './AuthStack';
 
@@ -52,6 +53,7 @@ const MainNavigation = (props: Props) => {
         <Stack.Screen name="ProductStack" component={ProductStack} />
         <Stack.Screen name="CategoryDetailes" component={CategoryDetailes} />
         <Stack.Screen name="Auth" component={AuthStack} />
+        <Stack.Screen name="Cart" component={Cart} />
       </Stack.Navigator>
     </Fragment>
   );

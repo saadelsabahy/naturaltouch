@@ -11,13 +11,14 @@ import {AuthenticationContext} from '../contexts/AuthContext';
 import {Loader, NoInternet} from '../components';
 import {Portal, Snackbar} from 'react-native-paper';
 import {cartContext, NetworkContext, SnackBarContext} from '../contexts';
+import ChooseLanguage from '../screens/ChooseLanguage';
 
 interface Props {}
 
 const AppNavigation = (props: Props) => {
   const {
     authContext,
-    state: {isLoading, storeToken},
+    state: {isLoading, storeToken, firstInstall},
   } = useContext(AuthenticationContext);
   const {snakbarMessage, hideSnackbar, snakbarType} = useContext(
     SnackBarContext,
@@ -31,7 +32,9 @@ const AppNavigation = (props: Props) => {
   if (isLoading || !storeToken) {
     return <Loader />;
   }
-
+  if (!firstInstall) {
+    return <ChooseLanguage />;
+  }
   return (
     <>
       {!isOnline && <NoInternet />}

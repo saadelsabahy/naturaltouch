@@ -29,8 +29,9 @@ i18n
 
 i18n.on('languageChanged', async (lng) => {
   await AsyncStorage.setItem('@CACHED_LANG', lng);
-
-  if (lng === 'ar') {
+  I18nManager.forceRTL(lng == 'ar');
+  RNRestart.Restart();
+  /*  if (lng === 'ar') {
     if (!I18nManager.isRTL) {
       I18nManager.forceRTL(true);
       RNRestart.Restart();
@@ -40,7 +41,7 @@ i18n.on('languageChanged', async (lng) => {
       I18nManager.forceRTL(false);
       RNRestart.Restart();
     }
-  }
+  } */
   // RNRestart.Restart();
 });
 export default i18n;

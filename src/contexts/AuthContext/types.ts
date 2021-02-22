@@ -5,3 +5,4 @@ export const RESTORE_TOKEN: string = 'RESTORE_TOKEN';
 export const USER_TOKEN: string = 'userToken';
 export const STORE_DATA: string = 'storeData';
 export const USER_NAME: string = 'userName';
+export const FIRST_INSTALL: string = 'firstInstall';

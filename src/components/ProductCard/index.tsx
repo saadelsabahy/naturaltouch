@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Pressable, StyleSheet, View, ViewStyle} from 'react-native';
 import {Button, IconButton, Text} from 'react-native-paper';
 import {COLORS, COMMON_STYLES} from '../../constants/style';
@@ -15,6 +15,12 @@ import {
 } from '../../contexts';
 import reactotron from 'reactotron-react-native';
 import {useNavigation} from '@react-navigation/native';
+import IncreaseAndDecreaseAmount from '../IncreaseAndDecrease';
+
+export enum ChangeAmountEnum {
+  INCREASE,
+  DECREASE,
+}
 interface Props {
   saveText?: string;
   liked?: boolean;
@@ -24,10 +30,11 @@ interface Props {
   afterDiscountPrice?: string;
   price: string;
   rating: number;
-  onProductPressed: () => void;
-  containerStyle: ViewStyle;
+  onProductPressed?: () => void;
+  containerStyle?: ViewStyle;
   //onAddToCartPressed: () => void;
   id: string;
+  quantity: number;
 }
 
 const ProductCard = ({
@@ -43,8 +50,10 @@ const ProductCard = ({
   containerStyle,
   //onAddToCartPressed,
   id,
+  quantity,
 }: Props) => {
   const {t} = useTranslation();
+  const [amount, setamount] = useState<number>(1);
   const {cartProducts, addToCart, removeCartItem} = useContext(cartContext);
   const {favourites, addToFavourites, removeFromFavourites} = useContext(
     FavouritesContext,
@@ -70,7 +79,16 @@ const ProductCard = ({
     }
   };
   const onAddToCartPressed = () => {
-    addedToCart ? removeCartItem(id, productName) : addToCart(id, productName);
+    addedToCart
+      ? removeCartItem(id, productName)
+      : addToCart(id, productName, {}, amount);
+  };
+  const onChangeAmount = (type: ChangeAmountEnum) => {
+    if (type == ChangeAmountEnum.INCREASE) {
+      setamount((prev) => (amount < quantity ? prev + 1 : quantity));
+    } else {
+      setamount((prev) => (amount > 1 ? prev - 1 : 1));
+    }
   };
   return (
     <Pressable
@@ -81,39 +99,46 @@ const ProductCard = ({
           images={images}
           product={true}
           onImagePressed={onProductPressed}
+          autoplay={false}
         />
       </View>
 
       <View style={[styles.bodyContainer]}>
         <View style={[styles.productNameContainer]}>
-          <Text numberOfLines={2} style={[styles.productName]}>
+          <Text
+            numberOfLines={2}
+            ellipsizeMode="tail"
+            style={[styles.productName]}>
             {productName}
           </Text>
         </View>
 
         <View style={[styles.productPriceAndRatingContainer]}>
-          <Rating rating={rating} showRateNumber maxStars={5} />
+          <Rating rating={rating} starSize={30} maxStars={5} />
           <View style={[styles.priceContainer]}>
             {afterDiscountPrice && (
-              <CustomText
-                text={afterDiscountPrice}
-                textStyle={styles.beforeDiscountPrice}
-              />
+              <Text style={styles.beforeDiscountPrice}>
+                {afterDiscountPrice}
+              </Text>
             )}
-            <CustomText text={price} textStyle={styles.price} />
+            <Text style={styles.price}>{price}</Text>
           </View>
         </View>
       </View>
 
-      <Button
-        mode="contained"
-        style={[COMMON_STYLES.deleteBorderRadius]}
-        labelStyle={styles.buttonLabel}
-        onPress={onAddToCartPressed}>
-        {addedToCart
-          ? t('categoriesDetailesScreen:removeFromCart')
-          : t('categoriesDetailesScreen:addToCart')}
-      </Button>
+      <View style={styles.footerContainer}>
+        <IconButton
+          icon={addedToCart ? 'cart-off' : 'cart'}
+          color={COLORS.WHITE}
+          style={{backgroundColor: COLORS.MAINCOLOR}}
+          onPress={onAddToCartPressed}
+        />
+        <IncreaseAndDecreaseAmount
+          onChangeAmount={onChangeAmount}
+          amount={amount}
+          itemKey={+id}
+        />
+      </View>
 
       <View style={[styles.absoluteRow]}>
         <SaveSign text={saveText} />
@@ -140,38 +165,33 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   carsoulContainer: {
-    height: '60%',
+    height: '50%',
     width: '100%',
     // backgroundColor: '#892',
   },
   bodyContainer: {
     flex: 1,
     width: '97%',
-    height: '35%',
+    height: '50%',
     alignSelf: 'center',
   },
   productNameContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     alignSelf: 'center',
     overflow: 'hidden',
+    marginVertical: 3,
+    alignItems: 'flex-start',
   },
   productName: {
     textTransform: 'capitalize',
   },
   productPriceAndRatingContainer: {
     width: '100%',
-    flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
     alignSelf: 'center',
   },
   priceContainer: {
-    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginEnd: 3,
+    marginVertical: 2,
   },
   beforeDiscountPrice: {
     textDecorationLine: 'line-through',
@@ -179,6 +199,7 @@ const styles = StyleSheet.create({
   },
   price: {
     textTransform: 'uppercase',
+    fontSize: 18,
   },
   absoluteRow: {
     flex: 1,
@@ -194,5 +215,10 @@ const styles = StyleSheet.create({
   },
   addToCardButton: {
     borderRadius: 0,
+  },
+  footerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
