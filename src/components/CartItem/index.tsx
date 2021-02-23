@@ -5,6 +5,8 @@ import {COLORS} from '../../constants/style';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
 import {CustomText} from '../customText';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IncreaseAndDecreaseAmount from '../IncreaseAndDecrease';
+import {ChangeAmountEnum} from '../ProductCard';
 interface Props {
   price: string;
   name: string;
@@ -48,6 +50,19 @@ const CartItem = ({
     }
     return () => {};
   }, [initialAmount]); */
+  const onChangeCartItemAmount = (type: ChangeAmountEnum) => {
+    if (type == ChangeAmountEnum.INCREASE) {
+      onChangeAmount(
+        amount < initialAmount ? initialAmount : +amount + 1,
+        itemKey,
+      );
+    } else {
+      onChangeAmount(
+        amount <= initialAmount ? initialAmount : +amount - 1,
+        itemKey,
+      );
+    }
+  };
   return (
     <Pressable style={[styles.container]} onPress={onItemPressed}>
       <View style={[styles.imageContainer]}>
@@ -81,8 +96,11 @@ const CartItem = ({
             <View style={[styles.priceContainer]}>
               {price && <CustomText text={price} textStyle={styles.price} />}
             </View>
-
-            <View
+            <IncreaseAndDecreaseAmount
+              amount={amount}
+              onChangeAmount={onChangeCartItemAmount}
+            />
+            {/*  <View
               style={{
                 flex: 1,
                 flexDirection: 'row',
@@ -135,7 +153,7 @@ const CartItem = ({
                   style={styles.counterSignIcon}
                 />
               </Pressable>
-            </View>
+            </View> */}
           </View>
         </View>
       </View>
@@ -193,14 +211,13 @@ const styles = StyleSheet.create({
     // backgroundColor: '#ccc',
   },
   counterAndPriceContainer: {
-    minWidth: '70%',
-    maxWidth: '80%',
     backgroundColor: COLORS.GRAY_LIGHT,
     borderTopStartRadius: 5,
     borderBottomStartRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingHorizontal: 5,
   },
   priceContainer: {
     width: '50%',

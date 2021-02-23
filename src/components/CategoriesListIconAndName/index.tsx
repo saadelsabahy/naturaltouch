@@ -30,27 +30,22 @@ const CategoriesListIconAndName = ({data, onSelectCategory}: Props) => {
           return (
             <Pressable
               style={{
-                flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderBottomWidth:
-                  selected == index || selected - 1 == index ? 0 : 0.5,
+                  selected != index && !(selected == index + 1) ? 0.2 : 0,
                 borderStartWidth: selected == index ? 5 : 0,
-                padding: 10,
-                borderColor:
-                  selected == index ? COLORS.MAINCOLOR : COLORS.GRAY_LIGHT,
-                elevation: selected == index ? 0.2 : 0,
+                padding: 15,
+                borderTopEndRadius: index == selected + 1 ? 20 : 0,
+                borderBottomEndRadius: index == selected - 1 ? 20 : 0,
+                borderColor: selected == index ? COLORS.MAINCOLOR : COLORS.GRAY,
+                backgroundColor:
+                  index == selected ? COLORS.WHITE : COLORS.GRAY_LIGHT,
               }}
               onPress={() => {
                 setselected(index);
                 onSelectCategory(category_id);
               }}>
-              <FastImage
-                source={{uri: image}}
-                style={{width: 50, height: 50}}
-                resizeMode="contain"
-              />
-
               <CustomText text={name} textStyle={styles.text} />
             </Pressable>
           );
@@ -64,7 +59,7 @@ export {CategoriesListIconAndName};
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH / 4.5,
+    width: SCREEN_WIDTH / 3.5,
     height: '100%',
     backgroundColor: COLORS.WHITE,
   },

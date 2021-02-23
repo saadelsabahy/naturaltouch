@@ -22,6 +22,7 @@ import {categoriesInterface} from '../../interfaces/categories';
 import {useQuery} from 'react-query';
 import useAxios from '../../hooks/useAxios';
 import {endpoints} from '../../constants/apiEndpoints.constants';
+import {ScrollView} from 'react-native-gesture-handler';
 interface Props {
   navigation: CategoriesRouter;
 }
@@ -35,19 +36,17 @@ const Categories = (props: Props) => {
 
   useEffect(() => {
     setselectedCategory(categories[0].category_id);
-  }, [categories.length]);
+  }, [categories[0].category_id]);
 
   /* get subcategories */
   const getSubCategories = async () => {
     const {
-      data: {
-        CategoryInfo: {SubCategories},
-      },
+      data: {CategoryInfo},
     } = await Axios.post(endpoints.categoryInfo, {
       category_id: selectedCategory,
     });
 
-    return SubCategories;
+    return CategoryInfo;
   };
   const {data, isLoading, error, refetch} = useQuery(
     `subCategories${selectedCategory}`,
@@ -73,7 +72,7 @@ const Categories = (props: Props) => {
   const onSelectCategory = (categoryId: string) => {
     setselectedCategory(categoryId);
   };
-  Reactotron.log({data});
+  Reactotron.log({dt: data});
   return (
     <View style={{flex: 1, backgroundColor: COLORS.WHITE}}>
       <CustomHeader search={true} title={t('tabs:categories')} useMainColor />
@@ -83,91 +82,53 @@ const Categories = (props: Props) => {
           onSelectCategory={onSelectCategory}
         />
 
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, padding: 10, alignSelf: 'center'}}>
           {isLoading && <Loader />}
           {data && (
-            <FlatList
-              style={{width: '98%', alignSelf: 'center'}}
-              showsVerticalScrollIndicator={false}
-              data={data}
-              keyExtractor={(item, index) => `${index}`}
-              renderItem={({
-                item,
-                item: {subCategories, icon_image, name},
-                index,
-              }) => {
-                return (
-                  <View
-                    style={{
-                      flex: 1,
-                      height: 'auto',
-                      marginBottom: 5,
-                      justifyContent: 'space-between',
-                    }}>
-                    <Pressable
-                      onPress={() => onCategoryItemPressed(item)}
-                      style={{
-                        width: '97%',
-                        height: SCREEN_HEIGHT / 8,
-                        backgroundColor: COLORS.WHITE,
-
-                        alignSelf: 'center',
-                        overflow: 'hidden',
-                        alignItems: 'center',
-                        marginBottom: 5,
-                      }}>
-                      <FastImage
-                        source={{
-                          uri: icon_image,
-                        }}
-                        style={{
-                          width: '100%',
-                          height: '70%',
-                          borderRadius: 10,
-                          backgroundColor: COLORS.GRAY_LIGHT,
-                        }}
-                        resizeMode={FastImage.resizeMode.cover}
-                      />
-                      <Text>{name}</Text>
-                    </Pressable>
-                    {subCategories?.length ? (
-                      <FlatList
-                        horizontal
-                        inverted={I18nManager.isRTL}
-                        showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item, index) => `${item.category_id}`}
-                        data={subCategories}
-                        renderItem={({item, index}) => {
-                          return (
-                            <Pressable
-                              style={{
-                                flex: 1,
-                                alignItems: 'center',
-                                marginEnd: 5,
-                              }}
-                              onPress={() => onCategoryItemPressed(item)}>
-                              <FastImage
-                                source={{
-                                  uri: item.icon_image,
-                                }}
-                                style={{
-                                  width: SCREEN_WIDTH / 3,
-                                  height: SCREEN_HEIGHT / 8,
-                                  backgroundColor: COLORS.GRAY_LIGHT,
-                                  borderRadius: 5,
-                                }}
-                                resizeMode={FastImage.resizeMode.cover}
-                              />
-                              <Text>{item.name}</Text>
-                            </Pressable>
-                          );
-                        }}
-                      />
-                    ) : null}
-                  </View>
-                );
-              }}
-            />
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Pressable
+                onPress={() => onCategoryItemPressed(data)}
+                style={styles.categoryImageContainer}>
+                <FastImage
+                  source={{
+                    uri: data.Image,
+                  }}
+                  style={styles.categoryImage}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </Pressable>
+              <View
+                style={{
+                  backgroundColor: COLORS.WHITE,
+                  elevation: 5,
+                  borderRadius: 5,
+                }}>
+                <View style={styles.subCategoriesHeaderTextContainer}>
+                  <Text style={styles.subCategoriesHeaderText}>
+                    {t('tabs:categories')}
+                  </Text>
+                </View>
+                <View style={styles.subCategoriesContainer}>
+                  {data.SubCategories.map((item) => {
+                    return (
+                      <Pressable
+                        key={item.category_id}
+                        style={styles.subCategoryImageContainer}
+                        onPress={() => onCategoryItemPressed(item)}>
+                        <FastImage
+                          source={{
+                            uri: item.icon_image,
+                          }}
+                          style={styles.subCategoryImage}
+                          resizeMode={FastImage.resizeMode.cover}
+                        />
+                        <Text>{item.name}</Text>
+                      </Pressable>
+                    );
+                  })}
+                </View>
+              </View>
+            </ScrollView>
           )}
         </View>
       </View>
@@ -207,12 +168,46 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#ccc',
   },
+  categoryImageContainer: {
+    width: '100%',
+    height: SCREEN_HEIGHT / 4,
+    backgroundColor: COLORS.GRAY_LIGHT,
+    alignSelf: 'center',
+    overflow: 'hidden',
+    alignItems: 'center',
+    marginBottom: 5,
+    borderRadius: 5,
+  },
+  categoryImage: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: COLORS.GRAY_LIGHT,
+  },
+  subCategoriesHeaderTextContainer: {
+    height: SCREEN_HEIGHT / 10,
+    justifyContent: 'center',
+    paddingStart: 10,
+  },
+  subCategoriesHeaderText: {
+    fontWeight: '700',
+    fontSize: 19,
+  },
+  subCategoriesContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
+  subCategoryImage: {
+    width: '100%',
+    height: '80%',
+    borderRadius: 5,
+    backgroundColor: COLORS.MAINCOLOR,
+  },
+  subCategoryImageContainer: {
+    width: '45%',
+    height: SCREEN_HEIGHT / 6,
+    alignItems: 'center',
+    margin: 5,
+  },
 });
-{
-  /* <OneThreeImageContainer
-                      onImagePressed={onCategoryItemPressed}
-                      name={name}
-                      image={image}
-                      item={SubCategories || []}
-                    /> */
-}

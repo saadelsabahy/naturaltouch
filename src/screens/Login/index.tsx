@@ -72,13 +72,12 @@ const Login = ({navigation}: Props) => {
       is_logged,
     } = data?.data;
     if (customer_id) {
-      reset();
-      authContext.signIn({
+      await authContext.signIn({
         userName: `${firstname} ${lastname}`,
         userToken: password,
       });
-
-      navigation.navigate('Account');
+      reset();
+      navigation.navigate('More');
     } else {
       showSnackbar(t('messages:checkInfoAndRetry'), true);
     }
@@ -95,12 +94,16 @@ const Login = ({navigation}: Props) => {
       <KeyboardAwareScrollView
         contentContainerStyle={{flexGrow: 1}}
         enableOnAndroid
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps="always"
         keyboardOpeningTime={Number.MAX_SAFE_INTEGER}
         resetScrollToCoords={{x: 0, y: 0}}>
-        <View style={{width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.4}}>
+        <View
+          style={{
+            width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT / 3,
+            justifyContent: 'center',
+          }}>
           <HeaderImage />
-          <RegisterHeaderWithSocial />
         </View>
         <View style={[styles.formContainer]}>
           <Controller
@@ -167,6 +170,15 @@ const Login = ({navigation}: Props) => {
             />
           </View>
         </View>
+        {/* <View
+          style={{
+            width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT / 15,
+            justifyContent: 'flex-end',
+            backgroundColor: '#ccc',
+          }}>
+          <HeaderImage />
+        </View> */}
       </KeyboardAwareScrollView>
     </View>
   );
@@ -180,7 +192,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WHITE,
   },
   formContainer: {
-    height: SCREEN_HEIGHT * 0.5,
+    height: SCREEN_HEIGHT / 2,
     width: SCREEN_WIDTH * 0.9,
     alignSelf: 'center',
     justifyContent: 'space-evenly',

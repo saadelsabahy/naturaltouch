@@ -56,7 +56,7 @@ const Tabs = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      backBehavior="none"
+      backBehavior="history"
       tabBarOptions={{
         keyboardHidesTabBar: true,
         style: {height: SCREEN_HEIGHT / 11},

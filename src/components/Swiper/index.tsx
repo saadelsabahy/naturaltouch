@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FastImage from 'react-native-fast-image';
 import {COLORS} from '../../constants/style';
 import {
+  ROUNDED_BORDER,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
   SWIPER_HEIGHT,
@@ -52,21 +53,13 @@ const CustomSwiper = ({
       //loadMinimal={true}
       automaticallyAdjustContentInsets={true}
       showsButtons={showButtons}
-      paginationStyle={{
-        bottom: -0.15,
-        flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
-        backgroundColor: 'rgba(0,0,0,.5)',
-        width: 20 * images.length,
-        borderRadius: 15,
-        alignSelf: 'center',
-        start: SCREEN_WIDTH / 2.8,
-      }}
+      paginationStyle={[styles.paginationStyle, {width: 20 * images.length}]}
       buttonWrapperStyle={{
         flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
       }}
       prevButton={
         <Icon
-          name={I18nManager.isRTL ? 'arrow-left' : 'arrow-right'}
+          name={!I18nManager.isRTL ? 'arrow-left' : 'arrow-right'}
           size={50}
           color={COLORS.WHITE}
           style={{opacity: 0.8, start: -10}}
@@ -74,7 +67,7 @@ const CustomSwiper = ({
       }
       nextButton={
         <Icon
-          name={I18nManager.isRTL ? 'arrow-right' : 'arrow-left'}
+          name={!I18nManager.isRTL ? 'arrow-right' : 'arrow-left'}
           size={50}
           color={COLORS.WHITE}
           iconContainerStyle={styles.buttonsContainer}
@@ -102,14 +95,9 @@ const CustomSwiper = ({
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    height: '40%',
-    width: '100%',
-    backgroundColor: '#ddd',
-  },
-
   wrapper: {
     maxHeight: SWIPER_HEIGHT,
+    alignItems: 'center',
   },
 
   slide: {
@@ -127,6 +115,13 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     backgroundColor: COLORS.MAINCOLOR,
+  },
+  paginationStyle: {
+    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+    backgroundColor: 'rgba(0,0,0,.5)',
+    borderRadius: ROUNDED_BORDER,
+    bottom: 5,
+    marginStart: (SCREEN_WIDTH * 0.98) / 2.8,
   },
   activeDot: {
     backgroundColor: COLORS.WHITE,

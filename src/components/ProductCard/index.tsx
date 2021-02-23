@@ -132,11 +132,13 @@ const ProductCard = ({
           color={COLORS.WHITE}
           style={{backgroundColor: COLORS.MAINCOLOR}}
           onPress={onAddToCartPressed}
+          size={25}
         />
         <IncreaseAndDecreaseAmount
           onChangeAmount={onChangeAmount}
           amount={amount}
           itemKey={+id}
+          quantity={quantity}
         />
       </View>
 

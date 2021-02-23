@@ -29,9 +29,9 @@ const CustomInput = ({
 }: Props) => {
   return (
     <View style={[styles.container]}>
-      {fieldName && (
+      {/*  {fieldName && (
         <CustomText text={fieldName} textStyle={styles.fieldName} />
-      )}
+      )} */}
       <TextInput
         mode="flat"
         style={[styles.input, inputStyle]}
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   input: {
-    height: SCREEN_HEIGHT / 14,
+    height: SCREEN_HEIGHT / 12,
     textTransform: 'uppercase',
     paddingHorizontal: 2,
     borderRadius: 0,

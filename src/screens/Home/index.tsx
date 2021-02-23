@@ -67,16 +67,16 @@ const Home: React.FC<Props> = ({navigation}) => {
           } = await Axios.post(endpoints.categoryInfo, {
             category_id: item.imagelinkId,
           });
-          const route =
-            item.imagelinkType == 'category'
-              ? navigation.navigate('CategoryDetailes', {
-                  id: item.imagelinkId,
-                  name: Name,
-                })
-              : navigation.navigate('ProductStack', {
-                  screen: 'Product',
-                  params: {id: item.imagelinkId},
-                });
+
+          item.imagelinkType == 'category'
+            ? navigation.navigate('CategoryDetailes', {
+                id: item.imagelinkId,
+                name: Name,
+              })
+            : navigation.navigate('ProductStack', {
+                screen: 'Product',
+                params: {id: item.imagelinkId},
+              });
         } catch (error) {
           console.log('get CategoryInfo error', error);
         }

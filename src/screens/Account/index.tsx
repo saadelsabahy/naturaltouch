@@ -160,7 +160,7 @@ const Account = ({navigation}: Props) => {
               onPress={() =>
                 !!userToken
                   ? authContext.signOut()
-                  : navigation.navigate('Login')
+                  : navigation.navigate('Auth')
               }>
               {!!userToken ? t('auth:signOut') : t('auth:signIn')}
             </Button>
