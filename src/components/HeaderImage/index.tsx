@@ -1,6 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {Text} from 'react-native-paper';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
 
 interface Props {
@@ -8,6 +10,7 @@ interface Props {
 }
 
 const HeaderImage = ({height}: Props) => {
+  const {t} = useTranslation();
   return (
     <View
       style={[styles.headerImageContainer, {height: height ? height : '50%'}]}>
@@ -15,10 +18,11 @@ const HeaderImage = ({height}: Props) => {
         resizeMode={FastImage.resizeMode.contain}
         source={{
           uri:
-            'https://www.noonmar.com/ecdata/stores/FTZXHS2928/image/data/LOGO.png',
+            'https://global.naturaltouchshop.com/ecdata/stores/RZATPJ3934/image/data/Logonew123.png',
         }}
         style={styles.headerImage}
       />
+      <Text style={styles.greetingText}>{''}</Text>
     </View>
   );
 };
@@ -34,5 +38,9 @@ const styles = StyleSheet.create({
   headerImage: {
     width: '90%',
     height: '100%',
+  },
+  greetingText: {
+    fontSize: 20,
+    fontWeight: '700',
   },
 });

@@ -26,6 +26,13 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     backgroundColor: COLORS.WHITE,
   },
+  authButtonWithArrow: {
+    width: SCREEN_WIDTH / 4,
+    height: SCREEN_HEIGHT / 11,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

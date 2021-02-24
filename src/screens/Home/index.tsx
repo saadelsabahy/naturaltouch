@@ -139,7 +139,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                   title={section.title}>
                   <HorizontalList
                     data={section?.products}
-                    keyExtractor={(item, index) => `${item.productId}`}
+                    keyExtractor={(item, index) => `${item.product_id}`}
                     renderItem={({item}) => {
                       return (
                         <ProductCard

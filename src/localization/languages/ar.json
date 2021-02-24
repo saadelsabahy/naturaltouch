@@ -87,7 +87,8 @@
     "alreadyHaveAccount": "لديك حساب بالفعل ؟",
     "registerNow": "سجل الأن",
     "continue": "متابعه",
-    "signOut": "تسجيل الخروج"
+    "signOut": "تسجيل الخروج",
+    "resetPasswordText": "برجاء ادخال البريد الالكتروني وسوف تستقبل رساله لاعاده ضبط الرقم السري"
   },
   "validation": {
     "required": "{{fieldName}} مطلوب",

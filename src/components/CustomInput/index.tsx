@@ -35,8 +35,9 @@ const CustomInput = ({
       <TextInput
         mode="flat"
         style={[styles.input, inputStyle]}
-        theme={{roundness: 0}}
+        theme={{roundness: 7}}
         underlineColor={COLORS.GRAY}
+        underlineHeight={0.5}
         ref={reference}
         render={(innerProps) => (
           <NativeTextInput
@@ -77,8 +78,8 @@ const styles = StyleSheet.create({
   input: {
     height: SCREEN_HEIGHT / 12,
     textTransform: 'uppercase',
-    paddingHorizontal: 2,
-    borderRadius: 0,
+    paddingHorizontal: 5,
+    // borderRadius: 10,
   },
   helperText: {
     marginStart: 0,

@@ -17,9 +17,8 @@ import {useTranslation} from 'react-i18next';
 import {useMutation} from 'react-query';
 import {endpoints} from '../../constants/apiEndpoints.constants';
 import useAxios from '../../hooks/useAxios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {USER_NAME} from '../../contexts/AuthContext/types';
 import {AuthenticationContext, SnackBarContext} from '../../contexts';
+import {LoginArrow} from '../../utils/design';
 interface Props {}
 const defaultValues = {
   email: '',
@@ -97,12 +96,7 @@ const Login = ({navigation}: Props) => {
         keyboardShouldPersistTaps="always"
         keyboardOpeningTime={Number.MAX_SAFE_INTEGER}
         resetScrollToCoords={{x: 0, y: 0}}>
-        <View
-          style={{
-            width: SCREEN_WIDTH,
-            height: SCREEN_HEIGHT / 3,
-            justifyContent: 'center',
-          }}>
+        <View style={styles.headerContainer}>
           <HeaderImage />
         </View>
         <View style={[styles.formContainer]}>
@@ -110,7 +104,6 @@ const Login = ({navigation}: Props) => {
             control={control}
             render={({onChange, onBlur, value}) => (
               <CustomInput
-                fieldName={t('inputs:email')}
                 onSubmitEditing={onEmailSubmitEditing}
                 returnKeyType={'next'}
                 error={errors.email}
@@ -153,32 +146,29 @@ const Login = ({navigation}: Props) => {
             name="password"
             rules={validation(t)['password']}
           />
-
-          <Button
-            mode="contained"
-            style={[COMMON_STYLES.deleteBorderRadius]}
-            labelStyle={[COMMON_STYLES.whiteText]}
-            onPress={handleSubmit(onSignIn)}
-            loading={isLoading}>
-            {t('auth:signIn')}
-          </Button>
           <View style={[styles.secondaryButtonsContainer]}>
-            <CustomText text={t('auth:signUp')} onPress={onSignUpPressed} />
-            <CustomText
-              text={t('auth:forgetPassword')}
-              onPress={onForgetPasswordPressed}
+            <View style={styles.forgetAndSignupContainer}>
+              <CustomText
+                text={t('auth:signUp')}
+                textStyle={styles.signUpText}
+                onPress={onSignUpPressed}
+              />
+              <CustomText
+                text={t('auth:forgetPassword')}
+                onPress={onForgetPasswordPressed}
+              />
+            </View>
+
+            <Button
+              mode="contained"
+              style={[COMMON_STYLES.authButtonWithArrow]}
+              onPress={handleSubmit(onSignIn)}
+              loading={isLoading}
+              icon={(props) => LoginArrow(props)}
+              labelStyle={[COMMON_STYLES.whiteText]}
             />
           </View>
         </View>
-        {/* <View
-          style={{
-            width: SCREEN_WIDTH,
-            height: SCREEN_HEIGHT / 15,
-            justifyContent: 'flex-end',
-            backgroundColor: '#ccc',
-          }}>
-          <HeaderImage />
-        </View> */}
       </KeyboardAwareScrollView>
     </View>
   );
@@ -191,17 +181,41 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.WHITE,
   },
+  headerContainer: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT / 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   formContainer: {
+    flex: 1,
     height: SCREEN_HEIGHT / 2,
     width: SCREEN_WIDTH * 0.9,
     alignSelf: 'center',
     justifyContent: 'space-evenly',
-    //backgroundColor: '#479',
   },
   secondaryButtonsContainer: {
+    height: SCREEN_HEIGHT / 10,
     width: '100%',
-    flexDirection: 'row',
     justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  signUpText: {
+    textDecorationLine: 'underline',
+    color: COLORS.MAINCOLOR,
+    textDecorationColor: COLORS.MAINCOLOR,
+  },
+  button: {
+    width: SCREEN_WIDTH / 4,
+    height: SCREEN_HEIGHT / 11,
+    borderRadius: 10,
+    justifyContent: 'center',
     alignItems: 'center',
+  },
+  forgetAndSignupContainer: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'space-between',
   },
 });

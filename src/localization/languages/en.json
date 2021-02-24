@@ -87,7 +87,8 @@
     "alreadyHaveAccount": "already have account ?",
     "registerNow": "register now",
     "continue": "continue",
-    "signOut": "sign out"
+    "signOut": "sign out",
+    "resetPasswordText": "please enter your email and you will receive message to reset password"
   },
   "validation": {
     "required": "{{fieldName}} is required",

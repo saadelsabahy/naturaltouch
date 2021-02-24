@@ -1,8 +1,9 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Button, TextInput} from 'react-native-paper';
+import {Button, IconButton, TextInput, Text} from 'react-native-paper';
 import {
+  CustomHeader,
   CustomInput,
   CustomText,
   HeaderImage,
@@ -20,6 +21,8 @@ import Reactotron from 'reactotron-react-native';
 import axios from 'axios';
 import {AuthenticationContext} from '../../contexts';
 import {API_V1, STORE_URL} from '../../constants/config.constants';
+import FastImage from 'react-native-fast-image';
+import {LoginArrow} from '../../utils/design';
 
 interface Props {}
 const defaultValues = {
@@ -98,6 +101,7 @@ const ForgetPassword = ({navigation}: Props) => {
 
   return (
     <View style={[styles.container]}>
+      <CustomHeader title={t('auth:forgetPassword')} />
       <KeyboardAwareScrollView
         contentContainerStyle={{flexGrow: 1}}
         enableOnAndroid
@@ -106,11 +110,23 @@ const ForgetPassword = ({navigation}: Props) => {
         extraHeight={0}
         extraScrollHeight={0}
         resetScrollToCoords={{x: 0, y: 0}}>
-        <View style={{width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.3}}>
-          <HeaderImage height={'100%'} />
+        <View
+          style={{
+            width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT * 0.3,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <IconButton icon="lock-reset" disabled />
+          <Text numberOfLines={3} style={{alignSelf: 'center'}}>
+            {t('auth:resetPasswordText')}
+          </Text>
           {/* <RegisterHeaderWithSocial /> */}
         </View>
         <View style={[styles.formContainer]}>
+          <Text style={{alignSelf: 'center', marginVertical: 15}}>
+            {t('auth:forgetPassword')}
+          </Text>
           {requestError && (
             <CustomText
               text={t('messages:checkInfoAndRetry')}
@@ -211,12 +227,15 @@ const ForgetPassword = ({navigation}: Props) => {
           )}
           <Button
             mode="contained"
-            style={[COMMON_STYLES.deleteBorderRadius, {marginVertical: 10}]}
+            style={[
+              COMMON_STYLES.authButtonWithArrow,
+              {marginVertical: 10, alignSelf: 'flex-end'},
+            ]}
             labelStyle={[COMMON_STYLES.whiteText]}
             onPress={handleSubmit(onRequestCodePressed)}
-            loading={isLoading}>
-            {t('auth:continue')}
-          </Button>
+            loading={isLoading}
+            icon={(props) => LoginArrow(props)}
+          />
 
           <CustomText text={t('auth:signIn')} onPress={onSignInPressed} />
         </View>

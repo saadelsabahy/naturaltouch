@@ -23,22 +23,21 @@ const CustomHeader = ({
 }: Props) => {
   return (
     <View>
-      <HomeHeader
-        onAccountPressed={onAccountPressed}
-        onMenuPressed={onMenuPressed}
-        home={home}
-        {...props}
-      />
-      {/*    {home ? (
-       
+      {!title ? (
+        <HomeHeader
+          onAccountPressed={onAccountPressed}
+          onMenuPressed={onMenuPressed}
+          home={home}
+          {...props}
+        />
       ) : (
         <ScreenHeader
           search={search}
           title={title}
           {...props}
-          useMainColor={useMainColor}
+          useMainColor={true}
         />
-      )} */}
+      )}
     </View>
   );
 };

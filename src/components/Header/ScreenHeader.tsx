@@ -11,6 +11,8 @@ import {COLORS} from '../../constants/style';
 import FastImage from 'react-native-fast-image';
 import {BackArrow} from '../../svgs';
 import {useNavigation} from '@react-navigation/native';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+
 interface Props {
   onBackPressed?: () => void;
   onSearchPressed?: () => void;
@@ -32,12 +34,19 @@ const ScreenHeader: React.FC<Props> = ({
   const goToSearch = () => navigation.navigate('Search');
   return (
     <Appbar.Header theme={{colors: {primary: COLORS.WHITE}}} {...props}>
-      <Pressable onPress={goBack}>
-        <BackArrow
-          fill={useMainColor ? COLORS.MAINCOLOR : COLORS.GRAY}
-          style={{transform: [{rotate: I18nManager.isRTL ? '180deg' : '0deg'}]}}
-        />
-      </Pressable>
+      <Appbar.Action
+        onPress={goBack}
+        icon={(props) => {
+          return (
+            <SimpleLineIcons
+              name={I18nManager.isRTL ? 'arrow-right' : 'arrow-left'}
+              {...props}
+              color={COLORS.MAINCOLOR}
+            />
+          );
+        }}
+      />
+
       <Appbar.Content
         title={title}
         style={{alignItems: 'center'}}
@@ -64,5 +73,6 @@ export {ScreenHeader};
 const styles = StyleSheet.create({
   title: {
     color: COLORS.GRAY,
+    textTransform: 'capitalize',
   },
 });

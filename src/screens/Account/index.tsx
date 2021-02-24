@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
-import {Avatar, Button, List, Text} from 'react-native-paper';
+import {Avatar, Button, IconButton, List, Text} from 'react-native-paper';
 import {CustomText, HeaderImage, Loader} from '../../components';
 import {COLORS} from '../../constants/style';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
@@ -76,8 +76,12 @@ const Account = ({navigation}: Props) => {
     }
   };
   return (
-    <View style={{flex: 1}}>
-      <List.AccordionGroup>
+    <View style={{flex: 1, backgroundColor: COLORS.MAINCOLOR}}>
+      <View style={styles.header}>
+        <IconButton icon="cart" />
+      </View>
+      <View style={styles.body}></View>
+      {/* <List.AccordionGroup>
         <KeyboardAwareFlatList
           enableOnAndroid
           resetScrollToCoords={{x: 0, y: 0}}
@@ -166,7 +170,7 @@ const Account = ({navigation}: Props) => {
             </Button>
           )}
         />
-      </List.AccordionGroup>
+      </List.AccordionGroup> */}
     </View>
   );
 };
@@ -174,6 +178,16 @@ const Account = ({navigation}: Props) => {
 export {Account};
 
 const styles = StyleSheet.create({
+  header: {
+    height: SCREEN_HEIGHT / 7,
+    width: SCREEN_WIDTH,
+  },
+  body: {
+    flex: 1,
+    backgroundColor: COLORS.WHITE,
+    borderTopStartRadius: 25,
+    borderTopEndRadius: 25,
+  },
   headerContainer: {
     height: SCREEN_HEIGHT * 0.3,
     // backgroundColor: '#684',

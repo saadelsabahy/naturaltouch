@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, TextInput} from 'react-native-paper';
 import {
+  CustomHeader,
   CustomInput,
   CustomText,
   HeaderImage,
@@ -92,6 +93,7 @@ const Register = ({navigation}: Props) => {
 
   return (
     <View style={[styles.container]}>
+      <CustomHeader title={t('auth:signUp')} />
       <KeyboardAwareScrollView
         contentContainerStyle={{flexGrow: 1}}
         enableOnAndroid
@@ -100,10 +102,6 @@ const Register = ({navigation}: Props) => {
         /* extraHeight={0}
         extraScrollHeight={0} */
         resetScrollToCoords={{x: 0, y: 0}}>
-        <View style={{width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.3}}>
-          <HeaderImage />
-          <RegisterHeaderWithSocial />
-        </View>
         <View style={[styles.formContainer]}>
           <Controller
             control={control}
@@ -212,7 +210,7 @@ const Register = ({navigation}: Props) => {
           />
           <Button
             mode="contained"
-            style={[COMMON_STYLES.deleteBorderRadius]}
+            style={[styles.signUpButton]}
             labelStyle={[COMMON_STYLES.whiteText]}
             onPress={handleSubmit(onSignUp)}
             loading={isLoading}>
@@ -240,9 +238,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WHITE,
   },
   formContainer: {
-    // height: SCREEN_HEIGHT * 0.66,
-    flex: 1,
-    flexGrow: 1,
+    height: SCREEN_HEIGHT * 0.79,
     width: SCREEN_WIDTH * 0.9,
     alignSelf: 'center',
     justifyContent: 'space-evenly',
@@ -253,6 +249,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     //marginVertical: 5,
+  },
+  signUpButton: {
+    height: SCREEN_HEIGHT / 12,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   signInText: {
     // fontWeight: 'bold',

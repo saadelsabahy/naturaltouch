@@ -81,6 +81,7 @@ const Tabs = () => {
         name="AccountStack"
         component={AuthStack}
         options={{
+          tabBarVisible: false,
           ...tabBarOPtions({
             iconName: 'file-account-outline',
             label: t('tabs:account'),

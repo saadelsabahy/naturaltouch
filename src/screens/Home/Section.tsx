@@ -7,7 +7,6 @@ import {
   I18nManager,
 } from 'react-native';
 import {Text} from 'react-native-paper';
-import {CustomText} from '../../components';
 import {COLORS} from '../../constants/style';
 
 interface SectionStyle {
@@ -29,10 +28,9 @@ const styles = StyleSheet.create<SectionStyle>({
     borderRadius: 5,
   },
   titleContainer: {
-    paddingVertical: 6,
-    alignItems: 'center',
+    paddingVertical: 10,
     backgroundColor: COLORS.WHITE,
-
+    paddingHorizontal: 10,
     overflow: 'hidden',
   },
   titleStyle: {
@@ -54,10 +52,9 @@ const Section: React.FC<SectionProps> = ({
   <View style={StyleSheet.compose(styles.container, container)}>
     {title && true && title !== '' ? (
       <View style={StyleSheet.compose(styles.titleContainer, titleContainer)}>
-        <CustomText
-          text={title}
-          textStyle={StyleSheet.compose(styles.titleStyle, titleStyle)}
-        />
+        <Text style={StyleSheet.compose(styles.titleStyle, titleStyle)}>
+          {title}
+        </Text>
       </View>
     ) : null}
     <View style={[contentContainer]}>{children}</View>
