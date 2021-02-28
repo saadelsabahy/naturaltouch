@@ -15,7 +15,7 @@
   },
   "caregoriesScreen": {},
   "categoriesDetailesScreen": {
-    "filter": "فلتر",
+    "filter": "تصفيه",
     "sort": "ترتيب",
     "save": "حفظ",
     "catigurie": "الصنف",
@@ -48,7 +48,12 @@
     "favourite": "المفضله",
     "myPurchases": "مشترياتي",
     "customerServices": "خدمه العملاء",
-    "hotLine": "الخط الساخن"
+    "hotLine": "الخط الساخن",
+    "support": "الدعم",
+    "settings": "الإعدادات",
+    "whatsapp": "نحدث واتساب",
+    "contactUs": "اتصل بنا",
+    "commonQuestions": "الاسئله الشائعه"
   },
   "myPurchases": {
     "orderNumber": "رقم الطلب",

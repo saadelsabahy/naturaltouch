@@ -1,7 +1,10 @@
 import React from 'react';
-import {View, Text, FlatListProps} from 'react-native';
+import {View, Text, FlatListProps, StyleSheet, Pressable} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {FlatList} from 'react-native-gesture-handler';
 import {OneThreeImageContainer} from '../../components';
+import {COLORS} from '../../constants/style';
+import {SCREEN_HEIGHT} from '../../constants/style/sizes';
 import {createCategoriesGridArray} from '../../utils';
 
 interface Props {
@@ -16,27 +19,53 @@ const HomeGrid = ({product, data, onImagePressed, ...props}: Props) => {
       style={{width: '95%', alignSelf: 'center'}}
       scrollEnabled={false}
       showsVerticalScrollIndicator={false}
-      data={
-        data?.length && data.length > 4
-          ? createCategoriesGridArray(data).slice(0, 2)
-          : createCategoriesGridArray(data)
-      }
+      data={data}
       keyExtractor={(item, index) => `${index}`}
       renderItem={({item, item: {name, thumb, icon}, index}) => {
         return (
-          <OneThreeImageContainer
-            home
-            name={name}
-            image={product ? thumb : icon}
-            item={item}
-            onImagePressed={onImagePressed}
-            product={product}
-          />
+          <Pressable
+            onPress={() => onImagePressed(item)}
+            style={[styles.oneImageContainer]}>
+            <FastImage
+              source={{uri: product ? thumb : icon}}
+              style={[styles.oneImageStyle]}
+              resizeMode={FastImage.resizeMode.stretch}
+            />
+          </Pressable>
         );
       }}
       {...props}
     />
   );
 };
+const styles = StyleSheet.create({
+  listContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  oneImageContainer: {
+    flex: 1,
+    height: SCREEN_HEIGHT / 7,
+    backgroundColor: 'transparent',
+    borderRadius: 5,
+    justifyContent: 'center',
+    overflow: 'hidden',
+    marginBottom: 3,
+  },
+  oneImageStyle: {width: '100%', height: '100%'},
+  multiImageStyle: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: COLORS.WHITE,
+  },
+  multiImageListContainer: {width: '100%', flex: 1, marginVertical: 5},
+  multiImageContainer: {
+    flex: 1,
+    height: SCREEN_HEIGHT / 5,
+    overflow: 'hidden',
+  },
+});
 
 export default HomeGrid;

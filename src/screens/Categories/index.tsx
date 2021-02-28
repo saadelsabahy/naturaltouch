@@ -61,18 +61,19 @@ const Categories = (props: Props) => {
   }, [selectedCategory]);
   /* functions */
   const onCategoryItemPressed = (item: any) => {
-    const {category_id: id, name} = item;
+    const {category_id: id, Category_Id, name, Name} = item;
+    console.log({id, item});
 
     navigation.navigate('CategoryDetailes', {
-      id,
-      name,
+      id: Category_Id || id,
+      name: Name || name,
     });
   };
 
   const onSelectCategory = (categoryId: string) => {
     setselectedCategory(categoryId);
   };
-  Reactotron.log({dt: data});
+
   return (
     <View style={{flex: 1, backgroundColor: COLORS.WHITE}}>
       <CustomHeader search={true} title={t('tabs:categories')} useMainColor />
@@ -84,7 +85,7 @@ const Categories = (props: Props) => {
 
         <View style={{flex: 1, padding: 10, alignSelf: 'center'}}>
           {isLoading && <Loader />}
-          {data && (
+          {!!data && (
             <ScrollView showsVerticalScrollIndicator={false}>
               <Pressable
                 onPress={() => onCategoryItemPressed(data)}
@@ -189,7 +190,6 @@ const styles = StyleSheet.create({
     paddingStart: 10,
   },
   subCategoriesHeaderText: {
-    fontWeight: '700',
     fontSize: 19,
   },
   subCategoriesContainer: {

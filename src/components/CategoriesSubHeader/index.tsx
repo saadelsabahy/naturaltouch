@@ -23,7 +23,7 @@ const CategorySubHeader = ({
   const {t} = useTranslation();
   return (
     <View style={[styles.container]}>
-      {grid && (
+      {/*  {grid && (
         <Pressable
           onPress={onGridPressed}
           style={({pressed}) => [
@@ -34,7 +34,7 @@ const CategorySubHeader = ({
             <Icon name={grid && gridIcon} size={25} />
           </Button>
         </Pressable>
-      )}
+      )} */}
       <Pressable
         onPress={onSortPressed}
         style={({pressed}) => [styles.pressable, {opacity: pressed ? 0.7 : 1}]}>

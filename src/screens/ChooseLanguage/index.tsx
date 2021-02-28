@@ -11,18 +11,20 @@ import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
 import {AuthenticationContext} from '../../contexts';
 import {FIRST_INSTALL} from '../../contexts/AuthContext/types';
 import useAxios from '../../hooks/useAxios';
+import {useLanguage} from '../../hooks/useLanguage';
 
 interface Props {}
 
 const ChooseLanguage = (props: Props) => {
   const Axios = useAxios();
+  const {onChageLanguage} = useLanguage();
   const {
     state: {
       settings: {LogoURL},
     },
   } = useContext(AuthenticationContext);
   const {t, i18n} = useTranslation();
-  const onChageLanguage = useCallback(
+  /*  const onChageLanguage = useCallback(
     async (language: string) => {
       // const language_code = I18nManager.isRTL ? 'en' : 'ar';
       try {
@@ -36,7 +38,7 @@ const ChooseLanguage = (props: Props) => {
       }
     },
     [i18n],
-  );
+  ); */
   return (
     <View style={styles.container}>
       <View style={{flex: 0.5, justifyContent: 'center', alignItems: 'center'}}>

@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, Text, ViewStyle} from 'react-native';
+import {View, ViewStyle, Pressable, StyleSheet} from 'react-native';
+import {Text} from 'react-native-paper';
+import {COLORS} from '../../constants/style';
 import {HomeHeader} from './HomeHeader';
 import {ScreenHeader} from './ScreenHeader';
 
@@ -10,6 +12,7 @@ interface Props extends ViewStyle {
   search?: boolean;
   title?: string;
   useMainColor?: boolean;
+  code?: boolean;
 }
 
 const CustomHeader = ({
@@ -19,6 +22,7 @@ const CustomHeader = ({
   search,
   title,
   useMainColor,
+  code,
   ...props
 }: Props) => {
   return (
@@ -38,8 +42,26 @@ const CustomHeader = ({
           useMainColor={true}
         />
       )}
+      {!!code && (
+        <Pressable
+          style={styles.codeContainer}
+          onPress={() => console.log('code')}>
+          <Text style={styles.codeText}>{code}</Text>
+        </Pressable>
+      )}
     </View>
   );
 };
+const styles = StyleSheet.create({
+  codeContainer: {
+    backgroundColor: COLORS.MOCK_BG_RED,
+    justifyContent: 'center',
+    padding: 3,
+  },
+  codeText: {
+    color: COLORS.WHITE,
+    textTransform: 'capitalize',
+  },
+});
 
 export {CustomHeader};

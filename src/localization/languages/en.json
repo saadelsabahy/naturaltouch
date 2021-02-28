@@ -48,7 +48,12 @@
     "favourite": "favourite",
     "myPurchases": "my purchases",
     "customerServices": "customer services",
-    "hotLine": "hot line"
+    "hotLine": "hot line",
+    "support": "support",
+    "settings": "settings",
+    "whatsapp": "whatsapp",
+    "contactUs": "contact us",
+    "commonQuestions": "common questions"
   },
   "myPurchases": {
     "orderNumber": "order number",

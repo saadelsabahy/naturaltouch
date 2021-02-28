@@ -1,25 +1,30 @@
 import React, {useContext} from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {
+  I18nManager,
+  Linking,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import {Avatar, Button, IconButton, List, Text} from 'react-native-paper';
-import {CustomText, HeaderImage, Loader} from '../../components';
+import {CustomText, HeaderImage, Loader, MoreItem} from '../../components';
 import {COLORS} from '../../constants/style';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
 import ChangePassword from './ChangePassword';
 import PersonalInformation from './PersonalInformation';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTranslation} from 'react-i18next';
 import {AuthenticationContext} from '../../contexts';
 import {useQuery} from 'react-query';
 import useAxios from '../../hooks/useAxios';
 import {endpoints} from '../../constants/apiEndpoints.constants';
-
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import {useLanguage} from '../../hooks/useLanguage';
 interface Props {}
 
 const headerComponent = (userName: string, userToken: boolean) => (
   <View style={[styles.headerContainer]}>
-    <HeaderImage height={'70%'} />
-
     {userToken && userName && (
       <View style={styles.logedInUserInfoContainer}>
         <Avatar.Image
@@ -27,15 +32,11 @@ const headerComponent = (userName: string, userToken: boolean) => (
             uri:
               'https://www.noonmar.com/ecdata/stores/FTZXHS2928/image/data/LOGO.png',
           }}
-          size={80}
+          size={40}
         />
         {!!userName && (
           <View style={styles.userNameContainer}>
             <CustomText text={userName} textStyle={styles.userName} />
-            <CustomText
-              text={'200 pt'}
-              textStyle={{...styles.userName, textAlign: 'center'}}
-            />
           </View>
         )}
       </View>
@@ -49,6 +50,7 @@ const Account = ({navigation}: Props) => {
     authContext,
   } = useContext(AuthenticationContext);
   const Axios = useAxios();
+  const {onChageLanguage} = useLanguage();
   const getContactUs = async () => {
     const {
       data: {Sections},
@@ -56,16 +58,7 @@ const Account = ({navigation}: Props) => {
     return Sections[0];
   };
   const {data, isLoading, isError} = useQuery('customerService', getContactUs);
-  const MOCK_DATA = [
-    {
-      icon: 'account-edit-outline',
-      name: t('accountScreen:personalInformation'),
-    },
-    {icon: 'lock-outline', name: t('accountScreen:changeMyPassword')},
-    {icon: 'heart-outline', name: t('accountScreen:favourite')},
-    {icon: 'cart-outline', name: t('accountScreen:myPurchases')},
-    {icon: 'account-circle-outline', name: t('accountScreen:customerServices')},
-  ];
+
   const onAccordionPressed = (name: string) => {
     console.log(name);
 
@@ -78,10 +71,162 @@ const Account = ({navigation}: Props) => {
   return (
     <View style={{flex: 1, backgroundColor: COLORS.MAINCOLOR}}>
       <View style={styles.header}>
-        <IconButton icon="cart" />
+        <IconButton
+          onPress={() => navigation.navigate(userToken ? 'Cart' : 'Auth')}
+          icon={(props) => (
+            <Fontisto
+              {...props}
+              name={'shopping-basket'}
+              color={COLORS.WHITE}
+            />
+          )}
+        />
+        {userToken && <>{headerComponent(userName, !!userToken)}</>}
       </View>
-      <View style={styles.body}></View>
-      {/* <List.AccordionGroup>
+      <View style={styles.body}>
+        <View style={styles.contentContainer}>
+          <MoreItem
+            sections={[
+              {
+                name: !!userToken
+                  ? t('auth:signOut')
+                  : `${t('auth:signIn')} / ${t('auth:signUp')}`,
+                icon: 'account-circle',
+                onPress: () =>
+                  !!userToken
+                    ? authContext.signOut()
+                    : navigation.navigate('Auth'),
+              },
+            ]}
+          />
+
+          <MoreItem
+            title={t('accountScreen:support')}
+            sections={[
+              {
+                name: t('accountScreen:whatsapp'),
+                icon: 'whatsapp',
+                onPress: () =>
+                  Linking.openURL(
+                    `whatsapp://send?text=hello&phone=${data.firstcontacdetails}`,
+                  ),
+              },
+              {
+                name: t('accountScreen:contactUs'),
+                icon: 'phone-in-talk-outline',
+                onPress: () =>
+                  Linking.openURL(`tel:${data.firstcontacdetails}`),
+              },
+              {
+                name: t('accountScreen:commonQuestions'),
+                icon: 'comment-question',
+                onPress: () => console.log('login'),
+              },
+            ]}
+          />
+
+          <MoreItem
+            title={t('accountScreen:settings')}
+            sections={[
+              {
+                name: !I18nManager.isRTL ? 'العربيه' : 'english',
+                icon: 'translate',
+                onPress: () => onChageLanguage(I18nManager.isRTL ? 'en' : 'ar'),
+              },
+            ]}
+          />
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export {Account};
+
+const styles = StyleSheet.create({
+  header: {
+    height: SCREEN_HEIGHT / 7,
+    width: SCREEN_WIDTH,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  body: {
+    flex: 1,
+    backgroundColor: COLORS.WHITE,
+    borderTopStartRadius: 25,
+    borderTopEndRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerContainer: {
+    height: SCREEN_HEIGHT / 13,
+    width: '90%',
+    alignItems: 'center',
+    // backgroundColor: '#684',
+  },
+  contentContainer: {
+    height: '90%',
+    width: '90%',
+  },
+  logedInUserInfoContainer: {
+    width: '100%',
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    //top: -40,
+    //backgroundColor: '#ddd',
+    height: '100%',
+  },
+  userNameContainer: {
+    marginStart: 10,
+    height: '95%',
+    justifyContent: 'center',
+  },
+  userName: {
+    textTransform: 'uppercase',
+    fontSize: 17,
+  },
+  accordionItem: {
+    backgroundColor: COLORS.WHITE,
+    borderRadius: 5,
+    borderWidth: 0.2,
+    borderColor: COLORS.GRAY,
+    height: SCREEN_HEIGHT / 12,
+    paddingTop: 0,
+    width: SCREEN_WIDTH - 20,
+    alignSelf: 'center',
+    overflow: 'hidden',
+  },
+  CustomizableAccordionTextContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    //justifyContent: 'space-between',
+  },
+  contactTextContainer: {
+    width: '50%',
+    alignItems: 'center',
+    paddingVertical: 3,
+    marginBottom: 3,
+    backgroundColor: COLORS.GRAY_LIGHT,
+  },
+  customerServiceInfoContainer: {
+    flex: 1,
+    marginVertical: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  customAccordionText: {
+    flex: 1,
+    color: COLORS.GRAY,
+    textTransform: 'capitalize',
+    textAlign: 'center',
+  },
+});
+{
+  /* <List.AccordionGroup>
         <KeyboardAwareFlatList
           enableOnAndroid
           resetScrollToCoords={{x: 0, y: 0}}
@@ -170,83 +315,5 @@ const Account = ({navigation}: Props) => {
             </Button>
           )}
         />
-      </List.AccordionGroup> */}
-    </View>
-  );
-};
-
-export {Account};
-
-const styles = StyleSheet.create({
-  header: {
-    height: SCREEN_HEIGHT / 7,
-    width: SCREEN_WIDTH,
-  },
-  body: {
-    flex: 1,
-    backgroundColor: COLORS.WHITE,
-    borderTopStartRadius: 25,
-    borderTopEndRadius: 25,
-  },
-  headerContainer: {
-    height: SCREEN_HEIGHT * 0.3,
-    // backgroundColor: '#684',
-  },
-  logedInUserInfoContainer: {
-    width: '90%',
-    alignSelf: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    //top: -40,
-    //backgroundColor: '#ddd',
-    height: SCREEN_HEIGHT / 7,
-    position: 'absolute',
-    top: (SCREEN_HEIGHT * 0.3) / 2,
-  },
-  userNameContainer: {
-    marginStart: 10,
-    height: '100%',
-    justifyContent: 'flex-end',
-    marginTop: 10,
-  },
-  userName: {
-    textTransform: 'uppercase',
-    fontSize: 17,
-  },
-  accordionItem: {
-    backgroundColor: COLORS.WHITE,
-    borderRadius: 5,
-    borderWidth: 0.2,
-    borderColor: COLORS.GRAY,
-    height: SCREEN_HEIGHT / 12,
-    paddingTop: 0,
-    width: SCREEN_WIDTH - 20,
-    alignSelf: 'center',
-    overflow: 'hidden',
-  },
-  CustomizableAccordionTextContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    //justifyContent: 'space-between',
-  },
-  contactTextContainer: {
-    width: '50%',
-    alignItems: 'center',
-    paddingVertical: 3,
-    marginBottom: 3,
-    backgroundColor: COLORS.GRAY_LIGHT,
-  },
-  customerServiceInfoContainer: {
-    flex: 1,
-    marginVertical: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  customAccordionText: {
-    flex: 1,
-    color: COLORS.GRAY,
-    textTransform: 'capitalize',
-    textAlign: 'center',
-  },
-});
+      </List.AccordionGroup> */
+}

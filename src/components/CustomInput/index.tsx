@@ -55,6 +55,7 @@ const CustomInput = ({
           />
         )}
         {...props}
+        placeholder={props.placeholder?.toLocaleUpperCase()}
       />
       {error && error.message && (
         <HelperText type="error" visible={true} style={[styles.helperText]}>

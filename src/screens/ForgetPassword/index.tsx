@@ -110,22 +110,23 @@ const ForgetPassword = ({navigation}: Props) => {
         extraHeight={0}
         extraScrollHeight={0}
         resetScrollToCoords={{x: 0, y: 0}}>
-        <View
-          style={{
-            width: SCREEN_WIDTH,
-            height: SCREEN_HEIGHT * 0.3,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <IconButton icon="lock-reset" disabled />
-          <Text numberOfLines={3} style={{alignSelf: 'center'}}>
+        <View style={styles.headerContainer}>
+          <IconButton
+            icon="lock-reset"
+            size={50}
+            color={COLORS.MAINCOLOR}
+            disabled
+          />
+          <Text numberOfLines={3} style={styles.headerText}>
             {t('auth:resetPasswordText')}
           </Text>
           {/* <RegisterHeaderWithSocial /> */}
         </View>
         <View style={[styles.formContainer]}>
-          <Text style={{alignSelf: 'center', marginVertical: 15}}>
-            {t('auth:forgetPassword')}
+          <Text style={styles.formTitle}>
+            {t('inputs:placeholder', {
+              fieldName: t('inputs:email'),
+            })}
           </Text>
           {requestError && (
             <CustomText
@@ -251,6 +252,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.WHITE,
   },
+  headerContainer: {
+    width: SCREEN_WIDTH / 2,
+    height: SCREEN_HEIGHT * 0.3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  headerText: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    textTransform: 'capitalize',
+  },
   formContainer: {
     flex: 1,
     width: SCREEN_WIDTH * 0.9,
@@ -258,6 +271,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     //backgroundColor: '#479',
+  },
+  formTitle: {
+    alignSelf: 'center',
+    marginVertical: 15,
+    textTransform: 'capitalize',
   },
   secondaryButtonsContainer: {
     width: '100%',

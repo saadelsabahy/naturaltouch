@@ -25,7 +25,6 @@ const OneThreeImageContainer = ({
     <View style={[styles.multiImageListContainer]}>
       {Array.isArray(item) ? (
         <FlatList
-          numColumns={3}
           scrollEnabled={false}
           data={item}
           keyExtractor={(item, index) => `${index}`}
@@ -35,22 +34,13 @@ const OneThreeImageContainer = ({
               <Pressable
                 onPress={() => onImagePressed(item)}
                 style={[
-                  styles.multiImageContainer,
-                  {
-                    marginEnd: item.length - 1 == index ? 0 : 5,
-                    borderRadius: home ? 0 : 15,
-                  },
+                  styles.oneImageContainer,
+                  {borderRadius: home ? 0 : 15},
                 ]}>
                 <FastImage
                   source={{uri: product ? thumb : icon}}
-                  style={[
-                    styles.multiImageStyle,
-                    {
-                      height: home ? '100%' : '80%',
-                      borderRadius: home ? 0 : 15,
-                    },
-                  ]}
-                  resizeMode="contain"
+                  style={[styles.oneImageStyle]}
+                  resizeMode={FastImage.resizeMode.stretch}
                 />
                 {!home && <Text style={{textAlign: 'center'}}>{name}</Text>}
               </Pressable>
@@ -88,19 +78,18 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     overflow: 'hidden',
+    marginBottom: 3,
   },
   oneImageStyle: {width: '100%', height: '100%'},
   multiImageStyle: {
     width: '100%',
-    height: '80%',
+    height: '100%',
     backgroundColor: COLORS.WHITE,
   },
   multiImageListContainer: {width: '100%', flex: 1, marginVertical: 5},
   multiImageContainer: {
     flex: 1,
     height: SCREEN_HEIGHT / 5,
-    justifyContent: 'space-between',
-    alignItems: 'center',
     overflow: 'hidden',
   },
 });

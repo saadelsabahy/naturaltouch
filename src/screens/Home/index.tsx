@@ -169,6 +169,7 @@ const Home: React.FC<Props> = ({navigation}) => {
                         {slideimage: section?.firstbannerimage},
                         {slideimage: section?.secondbannerimage},
                       ]}
+                      onImagePressed={() => {}}
                     />
                   </View>
                 </Section>
