@@ -186,9 +186,7 @@ const Home: React.FC<Props> = ({navigation}) => {
   };
   const onMenuPressed = () => {};
   const onPullToRefresh = async () => {
-    setrefresh(true);
-    await refetch(); // requery from page 1 again
-    setrefresh(false);
+    refetch();
   };
 
   return (
@@ -200,14 +198,16 @@ const Home: React.FC<Props> = ({navigation}) => {
       />
 
       <ScrollView
-        // nestedScrollEnabled={true}
+        style={{flex: 1}}
         ref={scrollRef}
         contentContainerStyle={styles.ScrollViewContentContainer}
         refreshControl={
           <RefreshControl
-            refreshing={refresh}
+            refreshing={isFetching}
             onRefresh={onPullToRefresh}
-            colors={[COLORS.MAINCOLOR]}
+            tintColor={COLORS.MAINCOLOR}
+            titleColor={COLORS.MAINCOLOR}
+            colors={[COLORS.MAINCOLOR, COLORS.MAINCOLOR]}
           />
         }>
         {(isLoading || getCategoryLoading) && <Loader />}

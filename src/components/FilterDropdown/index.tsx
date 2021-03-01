@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, I18nManager, StyleSheet, View} from 'react-native';
-import {List} from 'react-native-paper';
+import {Checkbox, List} from 'react-native-paper';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
 import {TextInput} from 'react-native-paper';
 import {COLORS, COMMON_STYLES} from '../../constants/style';
@@ -21,56 +21,48 @@ const FilterDropdown = ({
   selectedItems,
   name,
 }: Props) => {
-  return (
-    <View style={styles.container}>
-      <List.Accordion
-        id={typeof id == 'number' ? `${id}` : id}
-        title={title}
-        style={COMMON_STYLES.filterAccordionHeader}>
-        <View style={styles.listItemContainer}>
-          <FlatList
-            data={filterData}
-            contentContainerStyle={{flexGrow: 1}}
-            keyExtractor={(item) => `${item.option_value_id}`}
-            renderItem={({item, index}) => {
-              console.log(selectedItems, item.option_id, item.option_value_id);
-              return (
-                <List.Item
-                  title={`${item.name}`}
-                  onPress={() =>
-                    onItemPressed(item.option_value_id, item.option_id)
-                  }
-                  titleStyle={{}}
-                  style={styles.listItem}
-                  right={() => (
-                    <View
-                      style={[
-                        COMMON_STYLES.dot,
-                        {
-                          backgroundColor: !!(
-                            selectedItems[`${item.option_id}`] ==
-                            item.option_value_id
-                          )
-                            ? COLORS.MAINCOLOR
-                            : COLORS.GRAY_LIGHT,
-                          alignSelf: 'center',
-                        },
-                      ]}
-                    />
-                  )}
-                />
-              );
-            }}
-          />
-        </View>
-      </List.Accordion>
+  console.log(title);
 
-      <TextInput
-        style={styles.input}
-        editable={false}
-        value={selectedItems[`${filterData[0].option_id}`]}
-      />
-    </View>
+  return (
+    <List.Accordion
+      id={typeof id == 'number' ? `${id}` : id}
+      title={title}
+      /* style={COMMON_STYLES.filterAccordionHeader} */
+    >
+      <View style={styles.listItemContainer}>
+        <FlatList
+          data={filterData}
+          contentContainerStyle={{flexGrow: 1}}
+          keyExtractor={(item) => `${item.option_value_id}`}
+          renderItem={({item, index}) => {
+            return (
+              <List.Item
+                title={`${item.name}`}
+                onPress={() =>
+                  onItemPressed(item.option_value_id, item.option_id)
+                }
+                titleStyle={{}}
+                style={styles.listItem}
+                left={() => (
+                  <Checkbox
+                    color={COLORS.MAINCOLOR}
+                    uncheckedColor={COLORS.GRAY_LIGHT}
+                    status={
+                      !!(
+                        selectedItems[`${item.option_id}`] ==
+                        item.option_value_id
+                      )
+                        ? 'checked'
+                        : 'unchecked'
+                    }
+                  />
+                )}
+              />
+            );
+          }}
+        />
+      </View>
+    </List.Accordion>
   );
 };
 
@@ -103,7 +95,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'flex-end',
     backgroundColor: COLORS.WHITE,
-    height: SCREEN_HEIGHT / 20,
+    height: SCREEN_HEIGHT / 18,
     /* position: 'absolute',
     top: 50,
     start: SCREEN_HEIGHT / 4, */

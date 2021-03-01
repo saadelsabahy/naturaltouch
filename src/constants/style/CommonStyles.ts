@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterAccordionHeader: {
-    width: SCREEN_WIDTH / 3,
+    /*    width: SCREEN_WIDTH / 3,
     height: SCREEN_HEIGHT / 15,
     paddingVertical: 0,
-    backgroundColor: COLORS.WHITE,
+    backgroundColor: COLORS.WHITE, */
   },
   authButtonWithArrow: {
     width: SCREEN_WIDTH / 4,

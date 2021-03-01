@@ -1,10 +1,12 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, View, ViewProps} from 'react-native';
 import Modal from 'react-native-modal';
-import {Button, IconButton} from 'react-native-paper';
+import {Button, IconButton, Text} from 'react-native-paper';
 import {COLORS, COMMON_STYLES} from '../../constants/style';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
 import {useTranslation} from 'react-i18next';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 interface Props extends ViewProps {
   visible: boolean;
   hideModal: () => void;
@@ -26,9 +28,31 @@ const CustomModal = ({
       isVisible={visible}
       onBackdropPress={hideModal}
       backdropColor={COLORS.WHITE}
-      backdropOpacity={visible ? 0.5 : 0}
+      backdropOpacity={visible ? 1 : 0}
       onBackButtonPress={hideModal}
       style={styles.modalStyle}>
+      <View style={styles.closeHeader}>
+        <View>
+          {type == 'sort' && (
+            <View style={{flexDirection: 'row', marginStart: 5}}>
+              <Text>{t('categoriesDetailesScreen:sort')}</Text>
+              <Icon name="swap-vertical" size={25} color={COLORS.MAINCOLOR} />
+            </View>
+          )}
+          {type == 'filter' && (
+            <View style={{flexDirection: 'row', marginStart: 5}}>
+              <Text> {t('categoriesDetailesScreen:filter')}</Text>
+              <Icon name="filter-outline" color={COLORS.GRAY} size={25} />
+            </View>
+          )}
+        </View>
+        <IconButton
+          icon="close"
+          onPress={hideModal}
+          color={COLORS.MAINCOLOR}
+          size={30}
+        />
+      </View>
       <View
         style={
           type == 'sort'
@@ -54,17 +78,12 @@ export {CustomModal};
 const styles = StyleSheet.create({
   modalStyle: {
     height: SCREEN_HEIGHT,
-    //backgroundColor: 'red',
-    justifyContent: 'flex-start',
-    paddingBottom: 0,
     margin: 0,
-    marginTop: SCREEN_HEIGHT / 6,
+    width: SCREEN_WIDTH,
   },
   modalContentForSort: {
-    height: 'auto',
-    maxHeight: SCREEN_HEIGHT / 2,
-    alignSelf: 'center',
-    width: SCREEN_WIDTH - 20,
+    flex: 1,
+
     backgroundColor: COLORS.WHITE,
     elevation: 2,
     marginBottom: 0,
@@ -72,11 +91,12 @@ const styles = StyleSheet.create({
   },
   modalContentForFilter: {
     flex: 1,
-    alignSelf: 'center',
-    width: SCREEN_WIDTH - 5,
     backgroundColor: COLORS.WHITE,
-    elevation: 2,
-    marginBottom: 5,
-    paddingBottom: 0,
+  },
+  closeHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: SCREEN_HEIGHT / 10,
   },
 });

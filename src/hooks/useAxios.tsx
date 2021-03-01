@@ -13,16 +13,13 @@ const useAxios = () => {
 
   const instance = axios.create({
     baseURL: STORE_URL + API_PATH,
+    timeout: 10000,
     headers: {
       'Content-Type': 'application/json',
-      timeout: 10000,
       common: {
         Authorization: storeToken,
       },
     },
-    /* params: {
-      token: storeToken,
-    }, */
   });
   instance.interceptors.request.use(
     (config) => {

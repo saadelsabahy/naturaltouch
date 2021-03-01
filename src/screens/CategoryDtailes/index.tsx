@@ -123,7 +123,7 @@ const CategoryDetailes = ({navigation, route}: Props) => {
 
     if (selectedItemes[`${title}`]) {
       let newState = Object.assign({}, selectedItemes);
-      newState[`${title}`] = null;
+      delete newState[`${title}`];
 
       setselectedItemes(newState);
     } else {
@@ -268,6 +268,7 @@ const CategoryDetailes = ({navigation, route}: Props) => {
                   filterOptions={filterOptions}
                   onChangeText={onStartEndPriceINputsChange}
                   inputsValues={inputsValues}
+                  resetFilters={() => setselectedItemes({})}
                 />
               )}
             </CustomModal>
