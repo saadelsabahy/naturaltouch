@@ -19,6 +19,7 @@ import {
   AuthContext,
   CartProvider,
   FavouritesProvider,
+  FilterProvider,
   NetworkProvider,
   SnackBarProvider,
 } from './src/contexts';
@@ -62,7 +63,9 @@ const App = () => {
                   <SnackBarProvider>
                     <FavouritesProvider>
                       <CartProvider>
-                        <AppNavigation />
+                        <FilterProvider>
+                          <AppNavigation />
+                        </FilterProvider>
                       </CartProvider>
                     </FavouritesProvider>
                   </SnackBarProvider>

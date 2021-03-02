@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useMemo} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {List} from 'react-native-paper';
 import {FilterSelectedItemes} from '../../interfaces/categories';
@@ -9,29 +9,24 @@ import {COLORS} from '../../constants/style';
 import reactotron from 'reactotron-react-native';
 import {Item} from 'react-native-paper/lib/typescript/components/List/List';
 import SelectedFilters from './SelectedFilters';
+import {FilterContext} from '../../contexts';
 interface Props {
-  selectedItems: object;
-  onItemPressed: (item: string, title: string) => void;
   filterOptions: [];
   inputsValues: object;
   onChangeText: (text: string, inputName: string) => void;
-  resetFilters: () => void;
 }
 
-const FilterList = ({
-  onItemPressed,
-  selectedItems,
-  filterOptions,
-  onChangeText,
-  inputsValues,
-  resetFilters,
-}: Props) => {
-  const {t, i18n} = useTranslation();
-  reactotron.log({selectedItems});
-  const selectedOptions = Object.keys(selectedItems).map((item) =>
-    filterOptions.find((option) => option.option_id == item),
-  );
+const FilterList = ({filterOptions, onChangeText, inputsValues}: Props) => {
+  const {t} = useTranslation();
+  const {selectedItems} = useContext(FilterContext);
 
+  const selectedOptions = useMemo(
+    () =>
+      Object.keys(selectedItems).map((item) =>
+        filterOptions.find((option) => option.option_id == item),
+      ),
+    [selectedItems],
+  );
   return (
     <View style={{flex: 1, backgroundColor: COLORS.WHITE}}>
       <List.AccordionGroup>
@@ -41,9 +36,6 @@ const FilterList = ({
             !!selectedOptions.filter((x) => x).length ? (
               <SelectedFilters
                 selectedOptions={selectedOptions.filter((x) => x)}
-                selectedItems={selectedItems}
-                resetFilters={resetFilters}
-                onItemPressed={onItemPressed}
               />
             ) : null
           }
@@ -53,10 +45,8 @@ const FilterList = ({
               <FilterDropdown
                 id={index + 1}
                 filterData={item.option_values}
-                onItemPressed={onItemPressed}
                 name={item.option_value_id}
                 title={item.name}
-                selectedItems={selectedItems}
               />
             );
           }}

@@ -28,7 +28,7 @@ import useAxios from '../../hooks/useAxios';
 import {Product} from '../../interfaces';
 import {FilterSelectedItemes} from '../../interfaces/categories';
 import {removeDublicates} from '../../utils';
-import {AuthenticationContext} from '../../contexts';
+import {AuthenticationContext, FilterContext} from '../../contexts';
 import reactotron from 'reactotron-react-native';
 
 interface Props {}
@@ -39,7 +39,7 @@ const CategoryDetailes = ({navigation, route}: Props) => {
   const [visible, setvisible] = React.useState('');
   const [toggleGrid, settoggleGrid] = React.useState(false);
   const [currentPage, setcurrentPage] = React.useState(0);
-  const [selectedItemes, setselectedItemes] = React.useState<object>({});
+  const {selectedItems, resetSelectedItems} = useContext(FilterContext);
   const [sortItem, setsortItem] = React.useState({});
   const [inputsValues, setinputsValues] = React.useState({});
   const [refresh, setrefresh] = React.useState(false);
@@ -50,19 +50,20 @@ const CategoryDetailes = ({navigation, route}: Props) => {
       setcurrentPage(0);
       setinputsValues({});
       setsortItem({});
-      setselectedItemes({});
+      resetSelectedItems();
     };
   }, []);
+  console.log(selectedItems);
 
-  const getCategoryProducts = async ({pageParam}) => {
+  const getCategoryProducts = async ({pageParam}: {pageParam: number}) => {
     const {
-      data: {items},
+      data: {items, subcategories},
     } = await Axios.post(endpoints.advancedFilter, {
       // filterText: searchText,
       start: pageParam,
       limit: 10,
       categories_ids: [id],
-      filter_option: Object.values(selectedItemes).filter((x) => x),
+      filter_option: Object.values(selectedItems).filter((x) => x),
       sort_order: !!Object.values(sortItem).length ? sortItem.sort_order : '',
       sort_criteria: !!Object.values(sortItem).length
         ? sortItem.sort_criteria
@@ -117,22 +118,6 @@ const CategoryDetailes = ({navigation, route}: Props) => {
       select: (data) => ({...data, pages: data.pages.flatMap((page) => page)}),
     },
   );
-
-  const onItemPressed = (item: string, title: string) => {
-    console.log(item, title);
-
-    if (selectedItemes[`${title}`]) {
-      let newState = Object.assign({}, selectedItemes);
-      delete newState[`${title}`];
-
-      setselectedItemes(newState);
-    } else {
-      setselectedItemes({
-        ...selectedItemes,
-        [`${title}`]: item,
-      });
-    }
-  };
 
   const onShowModalPressed = (type: string) => setvisible(type);
   const hideModal = () => setvisible('');
@@ -218,7 +203,7 @@ const CategoryDetailes = ({navigation, route}: Props) => {
   };
   return (
     <View style={{flex: 1}}>
-      <CustomHeader title={name && name} style={{elevation: 0}} />
+      <CustomHeader title={name && name} style={{elevation: 0}} search />
       {isLoading && <Loader />}
       {!!data && (
         <>
@@ -263,12 +248,9 @@ const CategoryDetailes = ({navigation, route}: Props) => {
               )}
               {visible == 'filter' && (
                 <FilterList
-                  onItemPressed={onItemPressed}
-                  selectedItems={selectedItemes}
                   filterOptions={filterOptions}
                   onChangeText={onStartEndPriceINputsChange}
                   inputsValues={inputsValues}
-                  resetFilters={() => setselectedItemes({})}
                 />
               )}
             </CustomModal>

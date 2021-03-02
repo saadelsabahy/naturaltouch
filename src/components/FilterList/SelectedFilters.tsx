@@ -1,38 +1,36 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, View} from 'react-native';
 import {Button, IconButton, Text} from 'react-native-paper';
 import reactotron from '../../../ReactotronConfig';
 import {COLORS} from '../../constants/style';
 import {SCREEN_WIDTH} from '../../constants/style/sizes';
+import {FilterContext} from '../../contexts';
 
 interface Props {
   selectedOptions: any[];
-  selectedItems: object;
-  resetFilters: () => void;
-  onItemPressed: (item: string, title: string) => void;
 }
 
-const SelectedFilters = ({
-  selectedOptions,
-  selectedItems,
-  resetFilters,
-  onItemPressed,
-}: Props) => {
+const SelectedFilters = ({selectedOptions}: Props) => {
   const {t} = useTranslation();
+  const {onItemPressed, selectedItems, resetSelectedItems} = useContext(
+    FilterContext,
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={{textTransform: 'capitalize'}}>
           {t(`categoriesDetailesScreen:selectedFilters`)}
         </Text>
-        <Button onPress={resetFilters}>
+        <Button onPress={resetSelectedItems}>
           {t(`categoriesDetailesScreen:reset`)}
         </Button>
       </View>
       {selectedOptions.map((option, index) => {
         const filter = option.option_values.find(
-          (filter) => filter.option_value_id == selectedItems[option.option_id],
+          (filter) =>
+            filter.option_value_id == selectedItems[`${option.option_id}`],
         );
 
         return (

@@ -75,7 +75,7 @@ const ProductCard = ({
     if (!!userToken) {
       liked ? removeFromFavourites(id) : addToFavourites(id);
     } else {
-      navigation.navigate('Auth', {screen: 'Login'});
+      navigation.navigate('Auth');
     }
   };
   const onAddToCartPressed = () => {

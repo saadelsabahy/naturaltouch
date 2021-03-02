@@ -1,34 +1,24 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {FlatList, I18nManager, StyleSheet, View} from 'react-native';
 import {Checkbox, List} from 'react-native-paper';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
 import {TextInput} from 'react-native-paper';
 import {COLORS, COMMON_STYLES} from '../../constants/style';
+import reactotron from 'reactotron-react-native';
+import {FilterContext} from '../../contexts';
 interface Props {
   filterData: string[];
   id: string | number;
   title: string;
-  onItemPressed: (item: string, title: string) => void;
-  selectedItems: object;
   name: string;
 }
 
-const FilterDropdown = ({
-  id,
-  filterData,
-  title,
-  onItemPressed,
-  selectedItems,
-  name,
-}: Props) => {
-  console.log(title);
-
+const FilterDropdown = ({id, filterData, title, name}: Props) => {
+  const {onItemPressed, selectedItems, resetSelectedItems} = useContext(
+    FilterContext,
+  );
   return (
-    <List.Accordion
-      id={typeof id == 'number' ? `${id}` : id}
-      title={title}
-      /* style={COMMON_STYLES.filterAccordionHeader} */
-    >
+    <List.Accordion id={typeof id == 'number' ? `${id}` : id} title={title}>
       <View style={styles.listItemContainer}>
         <FlatList
           data={filterData}
