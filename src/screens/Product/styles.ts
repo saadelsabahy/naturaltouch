@@ -10,9 +10,7 @@ const styles = StyleSheet.create({
   },
   swiperContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT / 2,
-    borderTopStartRadius: 20,
-    borderTopEndRadius: 20,
+    height: SCREEN_HEIGHT / 2.5,
     overflow: 'hidden',
   },
   topIconsContainer: {
@@ -24,7 +22,7 @@ const styles = StyleSheet.create({
   },
 
   productDetailesContainer: {
-    width: '97%',
+    width: '96%',
     alignSelf: 'center',
   },
   productName: {

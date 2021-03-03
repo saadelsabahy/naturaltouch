@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     width: '100%',
-    height: SCREEN_HEIGHT / 19,
+    height: SCREEN_HEIGHT / 20,
     backgroundColor: COLORS.WHITE,
     alignItems: 'center',
   },

@@ -1,15 +1,15 @@
 export type Product = {
-  product_id?: string;
-  name?: string;
+  product_id: string;
+  name: string;
   short_description?: string;
   float_price: string;
-  float_special?: string | false;
-  price?: string;
+  float_special: string | false;
+  price: string;
   special?: string | false;
   currency?: string;
-  images?: Array<string>;
-  description?: string;
-  rating?: string;
+  images: Array<string>;
+  description: string;
+  rating: string;
   product_code?: string;
   brand?: string;
   availability?: string;
@@ -18,7 +18,7 @@ export type Product = {
   product_options?: ProductOption[];
   related_product?: Array<Product>;
   share_links?: string;
-  quantity?: string;
+  quantity: string;
   attributes?: ProductAttribute[];
   seller_id?: string;
   thumb?: string;

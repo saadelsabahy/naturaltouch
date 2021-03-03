@@ -5,6 +5,7 @@ import {Button, IconButton, List, Text} from 'react-native-paper';
 import {
   CartFooter,
   CustomerEvaluation,
+  CustomHeader,
   CustomSwiper,
   CustomText,
   Loader,
@@ -20,7 +21,11 @@ import Reactotron from 'reactotron-react-native';
 import {useQuery} from 'react-query';
 import useAxios from '../../hooks/useAxios';
 import {endpoints} from '../../constants/apiEndpoints.constants';
-import {ProductHeader} from './components';
+import {
+  ProductHeader,
+  IncreaseAndAddToCart,
+  ProductSegment,
+} from './components';
 import RelatedProductsSection from './components/RelatedProductsSection';
 import styles from './styles';
 import {cartContext} from '../../contexts/CartContext';
@@ -133,6 +138,7 @@ const Product = ({route, navigation}: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <CustomHeader />
       {isLoading && <Loader />}
       {data && !Array.isArray(data) && (
         <>
@@ -152,136 +158,40 @@ const Product = ({route, navigation}: Props) => {
 
             <View style={styles.productDetailesContainer}>
               <CustomText text={data.name} textStyle={styles.productName} />
-              <View style={styles.rowContainer}>
-                {data.brand && (
-                  <CustomText text={data.brand} style={styles.brand} />
-                )}
-                <Rating maxStars={5} rating={data.rating} />
-              </View>
+              {/* share */}
+              <Button
+                icon={'share-variant'}
+                color={COLORS.MAINCOLOR}
+                onPress={onSharePressed}
+                style={{
+                  alignItems: 'flex-start',
+                }}>
+                {t('productScreen:share')}
+              </Button>
+              {/* price */}
+              <Text
+                style={{
+                  fontSize: 20,
+                }}>{`${data.float_price} ${data.currency}`}</Text>
+              {/* increase & addToCart */}
+              <IncreaseAndAddToCart
+                data={data}
+                selectedProductOptions={selectedProductOptions}
+                id={id}
+              />
 
-              {!!data?.product_options.length && (
-                <View style={styles.rowContainer}>
-                  {data?.product_options.map((option) => {
-                    return (
-                      <List.Accordion
-                        title={
-                          /* t('categoriesDetailesScreen:size') */ option.name
-                        }
-                        style={styles.accordion}>
-                        {option.option_value.map((item) => {
-                          return (
-                            <List.Item
-                              title={item.name}
-                              right={(props) =>
-                                !!Object.keys(selectedProductOptions).length &&
-                                selectedProductOptions[option.option_id] ==
-                                  item.option_value_id ? (
-                                  <List.Icon
-                                    {...props}
-                                    icon="check"
-                                    color={COLORS.MAINCOLOR}
-                                  />
-                                ) : null
-                              }
-                              onPress={() =>
-                                onSelectOption(
-                                  option.option_id,
-                                  item.option_value_id,
-                                )
-                              }
-                            />
-                          );
-                        })}
-                      </List.Accordion>
-                    );
-                  })}
-                </View>
-              )}
-
-              {data.seller_id && (
-                <View
-                  style={[
-                    styles.rowContainer,
-                    {
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                    },
-                  ]}>
-                  <CustomText
-                    text={`${t('productScreen:seller')}`}
-                    textStyle={{...styles.brand, marginEnd: 3}}
-                  />
-                  {/* <Rating rating={3} /> */}
-                </View>
-              )}
-              <View>
-                {!!data?.attributes?.length && (
-                  <List.Accordion
-                    title={t('productScreen:productFeatures')}
-                    style={styles.columnAccordion}
-                    /* titleStyle={{textTransform: 'capitalize'}} */
-                  >
-                    {data?.attributes?.map((item, index) => {
-                      return (
-                        <View style={styles.attributeContainer}>
-                          <CustomText
-                            text={`${index + 1}. ${item.name}`}
-                            textStyle={{marginBottom: 5}}
-                          />
-                          <CustomText
-                            text={`${
-                              I18nManager.isRTL
-                                ? item.product_attribute_description['2'].text
-                                : item.product_attribute_description['1'].text
-                            }`}
-                            textStyle={{marginStart: 5}}
-                          />
-                        </View>
-                      );
-                    })}
-                  </List.Accordion>
-                )}
-
-                {!!data?.fixed_description?.length && (
-                  <List.Accordion
-                    title={t('productScreen:productsInformation')}
-                    style={styles.columnAccordion}>
-                    <HTMLView
-                      value={data?.fixed_description}
-                      style={{width: '100%'}}
-                      addLineBreaks={true}
-                      TextComponent={Text}
-                      renderNode={renderNode}
-                    />
-                  </List.Accordion>
-                )}
-
-                <List.Accordion
-                  titleStyle={styles.productInformationAccordionStyle}
-                  title={
-                    <>
-                      <CustomText
-                        text={t('productScreen:customerEvaluation')}
-                      />
-                      {!!review?.rating && (
-                        <Rating rating={+review.rating} maxStars={5} />
-                      )}
-                    </>
-                  }
-                  style={styles.columnAccordion}>
-                  {!!review?.rating && (
-                    <CustomerEvaluation
-                      userName={review.author}
-                      comment={review.text}
-                      rating={+review.rating}
-                    />
-                  )}
-                  <Button onPress={() => goToReviews(data.product_id)}>
-                    {t('productScreen:seeAllReviews')}
-                  </Button>
-                </List.Accordion>
-              </View>
+              {/* segment */}
+              <ProductSegment
+                fixedDescription={
+                  data.fixed_description.length ? data.fixed_description : ''
+                }
+                attributes={data?.attributes}
+                productId={data?.product_id}
+                goToReviews={goToReviews}
+                review={review}
+              />
             </View>
+            {/* RelatedProducts */}
             {!!data?.related_product?.length && (
               <RelatedProductsSection
                 data={data?.related_product}
@@ -289,22 +199,6 @@ const Product = ({route, navigation}: Props) => {
               />
             )}
           </ScrollView>
-          <CartFooter
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.button}
-            buttonTitleStyle={styles.buttonTitleStyle}
-            payLabel={
-              addedToCart
-                ? t('categoriesDetailesScreen:removeFromCart')
-                : t('categoriesDetailesScreen:addToCart')
-            }
-            Totalprice={`${data.float_price} ${data.currency}`}
-            onBayPressed={() => {
-              addedToCart
-                ? removeCartItem(data.product_id, data.name)
-                : addToCart(data.product_id, data.name, selectedProductOptions);
-            }}
-          />
         </>
       )}
     </SafeAreaView>

@@ -42,7 +42,7 @@ const CustomSwiper = ({
 }: props) => {
   return (
     <Swiper
-      style={styles.wrapper}
+      style={[styles.wrapper, {maxHeight: height || SWIPER_HEIGHT}]}
       height={height || SWIPER_HEIGHT}
       autoplay
       loop
@@ -96,7 +96,6 @@ const CustomSwiper = ({
 };
 const styles = StyleSheet.create({
   wrapper: {
-    maxHeight: SWIPER_HEIGHT,
     alignItems: 'center',
   },
 
@@ -117,11 +116,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.MAINCOLOR,
   },
   paginationStyle: {
+    flex: 1,
     flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
     backgroundColor: 'rgba(0,0,0,.5)',
     borderRadius: ROUNDED_BORDER,
     bottom: 5,
-    marginStart: (SCREEN_WIDTH * 0.98) / 2.8,
+    marginStart: SCREEN_WIDTH / 2,
   },
   activeDot: {
     backgroundColor: COLORS.WHITE,

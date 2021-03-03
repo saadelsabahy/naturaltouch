@@ -10,7 +10,7 @@ interface Props {
   onProductPressed: (item: any) => void;
 }
 
-const RelatedProductsSection = ({data,onProductPressed}: Props) => {
+const RelatedProductsSection = ({data, onProductPressed}: Props) => {
   const {t} = useTranslation();
   return (
     <Section
@@ -19,17 +19,18 @@ const RelatedProductsSection = ({data,onProductPressed}: Props) => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={data }
+        data={data}
         keyExtractor={(item, index) => `${index}`}
         renderItem={({item, index}) => {
           return (
             <ProductCard
               onProductPressed={() => onProductPressed(item.product_id)}
-              // containerStyle={{width: '50%'}}
               productName={item?.name}
               images={[{slideimage: item?.image}]}
               rating={item?.rating}
               price={`${item.price} ${item.currency}`}
+              id={item.product_id}
+              quantity={+item.quantity}
             />
           );
         }}

@@ -35,28 +35,28 @@ const ProductHeader = ({onSharePressed, id}: Props) => {
   };
   return (
     <View style={[styles.topIconsContainer]}>
-      <IconButton
+      {/* <IconButton
         icon={I18nManager.isRTL ? 'chevron-right' : 'chevron-left'}
         size={30}
         color={COLORS.WHITE}
         style={styles.iconButton}
         onPress={goBack}
-      />
+      /> */}
       <View>
         <IconButton
-          style={{backgroundColor: COLORS.GRAY_LIGHT}}
-          icon={'heart'}
+          // style={{backgroundColor: COLORS.GRAY_LIGHT}}
+          icon={liked ? 'heart' : 'heart-outline'}
           size={30}
-          color={liked ? COLORS.MAINCOLOR : COLORS.WHITE}
+          color={COLORS.MAINCOLOR}
           onPress={onAddToFavouritePressed}
         />
-        <IconButton
+        {/* <IconButton
           icon={'share'}
           size={30}
           color={COLORS.WHITE}
           onPress={onSharePressed}
           style={{backgroundColor: COLORS.GRAY_LIGHT}}
-        />
+        /> */}
       </View>
     </View>
   );
