@@ -1,5 +1,11 @@
 import React, {useRef, useState} from 'react';
-import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  View,
+  ScrollView,
+} from 'react-native';
 import {
   HomeSearch,
   CustomHeader,
@@ -10,7 +16,7 @@ import {
 } from '../../components';
 import {HomeScreenProps} from '../../interfaces/navigation';
 import Section from './Section';
-import {ScrollView} from 'react-native-gesture-handler';
+
 import useAxios from '../../hooks/useAxios';
 import {endpoints} from '../../constants/apiEndpoints.constants';
 import {useQuery} from 'react-query';

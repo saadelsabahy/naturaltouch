@@ -7,9 +7,8 @@ import {
   Platform,
   ScrollViewProps,
   RefreshControl,
+  FlatList,
 } from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {Text} from 'react-native-paper';
 import {COLORS} from '../../constants/style';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
 import {EmptyList} from '../ListEmptyComponent';
@@ -51,13 +50,14 @@ const FlatlistWithCustomScrollIndicator = ({
           // showsVerticalScrollIndicator={true}
           contentContainerStyle={{flexGrow: 1}}
           refreshControl={
-            refresh ? (
-              <RefreshControl
-                refreshing={refresh}
-                onRefresh={onPullToRefresh}
-                colors={[COLORS.MAINCOLOR]}
-              />
-            ) : null
+            <RefreshControl
+              refreshing={!!refresh}
+              onRefresh={onPullToRefresh}
+              tintColor={COLORS.MAINCOLOR}
+              titleColor={COLORS.MAINCOLOR}
+              colors={[COLORS.MAINCOLOR, COLORS.MAINCOLOR]}
+              enabled
+            />
           }
           scrollEventThrottle={100}
           updateCellsBatchingPeriod={1000}
@@ -68,28 +68,29 @@ const FlatlistWithCustomScrollIndicator = ({
           overScrollMode="never"
           removeClippedSubviews={true}
           //scrollEventThrottle={16}
-          onScroll={Animated.event(
-            [
-              {
-                nativeEvent: {
-                  contentOffset: {y: contentOffset},
-                },
-              },
-            ],
-            {useNativeDriver: false},
-          )}
-          onContentSizeChange={(_, height) => {
-            setWholeHeight(height);
-          }}
-          onLayout={(e) => {
-            setvisibleHeight(e.nativeEvent.layout.height);
-          }}
+          // onScroll={Animated.event(
+          //   [
+          //     {
+          //       nativeEvent: {
+          //         contentOffset: {y: contentOffset},
+          //       },
+          //     },
+          //   ],
+          //   {useNativeDriver: false},
+          // )}
+          // onContentSizeChange={(_, height) => {
+          //   setWholeHeight(height);
+          // }}
+          // onLayout={(e) => {
+          //   setvisibleHeight(e.nativeEvent.layout.height);
+          // }}
           getItemLayout={(data, index) => ({
             length: 80,
             offset: 80 * index,
             index,
           })}
           ListEmptyComponent={<EmptyList />}
+          automaticallyAdjustContentInsets={false}
           {...props}
         />
       </View>
