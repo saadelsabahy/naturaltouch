@@ -115,7 +115,7 @@ const Cart = ({navigation}: Props) => {
                   <CartItem
                     name={name}
                     // initialAmount={quantity}
-                    price={total}
+                    price={total.replace(currency, '').trim()}
                     image={image}
                     currency={currency}
                     onDeleteItemPressed={() => removeCartItem(`${key}`, name)}
@@ -123,20 +123,13 @@ const Cart = ({navigation}: Props) => {
                     amount={quantity}
                     itemKey={key}
                     onItemPressed={() => onItemPressed(product_id)}
+                    onRefresh={() => reftchCart()}
                   />
                 );
               }}
               ListEmptyComponent={<EmptyList emptyText={t('cart:emptyText')} />}
             />
           </View>
-          {!!cartProducts?.products?.length && (
-            <CartFooter
-              showTotal
-              Totalprice={cartProducts?.totals[0]?.text}
-              viewAddtoCartButton
-              onBayPressed={onBayPressed}
-            />
-          )}
         </>
       )}
     </View>

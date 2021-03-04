@@ -68,7 +68,7 @@ const Tabs = () => {
         options={{
           ...tabBarOPtions({
             iconName: 'menu',
-            label: t('tabs:cart'),
+            label: t('tabs:more'),
           }),
 
           tabBarBadgeStyle: {

@@ -2,9 +2,10 @@
   "tabs": {
     "home": "home",
     "categories": "categories",
-    "cart": "cart",
+    "cart": "shopping cart",
     "account": "account",
-    "offers": "offers"
+    "offers": "offers",
+    "more": "more"
   },
   "homeScreen": {
     "searchPlaceHolder": "What are you looking for?"
@@ -73,7 +74,10 @@
   },
 
   "general": {
-    "apply": "apply"
+    "apply": "apply",
+    "refresh": "refresh {{name}}",
+    "edit": "edit",
+    "delete": "delete"
   },
   "inputs": {
     "firstName": "first name",

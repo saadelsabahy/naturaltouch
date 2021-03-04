@@ -153,6 +153,7 @@ const CategoryDetailes = ({navigation, route}: Props) => {
         rating={item?.rating}
         price={`${item.price} ${item.currency}`}
         id={item.product_id}
+        quantity={+item.quantity}
       />
     );
   };

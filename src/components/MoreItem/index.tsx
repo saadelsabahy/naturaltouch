@@ -11,7 +11,7 @@ interface Props {
 
 const MoreItem = ({title, sections}: Props) => {
   return (
-    <List.Section>
+    <List.Section style={{width: '90%', alignSelf: 'center'}}>
       {title && (
         <List.Subheader style={styles.Subheader}>{title}</List.Subheader>
       )}

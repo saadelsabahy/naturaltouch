@@ -18,7 +18,7 @@ export type Product = {
   product_options?: ProductOption[];
   related_product?: Array<Product>;
   share_links?: string;
-  quantity: string;
+  quantity: number;
   attributes?: ProductAttribute[];
   seller_id?: string;
   thumb?: string;

@@ -217,6 +217,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     justifyContent: 'space-between',
-    alignItems: I18nManager.isRTL ? 'flex-start' : 'flex-end',
+    alignItems: 'flex-start',
   },
 });

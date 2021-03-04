@@ -7,7 +7,7 @@ import {
   Pressable,
   Platform,
 } from 'react-native';
-import Swiper from 'react-native-swiper';
+import Swiper, {SwiperProps} from 'react-native-swiper';
 
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FastImage from 'react-native-fast-image';
@@ -47,7 +47,7 @@ const CustomSwiper = ({
       autoplay
       loop
       removeClippedSubviews={false}
-      showsPagination={!showButtons}
+      showsPagination={true}
       dot={<View style={[styles.dot]} />}
       activeDot={<View style={[styles.activeDot]} />}
       //loadMinimal={true}
@@ -82,7 +82,7 @@ const CustomSwiper = ({
             style={styles.slide}
             key={image.imagelinkId || `${image}${index}`}>
             <FastImage
-              resizeMode={FastImage.resizeMode.cover}
+              resizeMode={FastImage.resizeMode.stretch}
               style={styles.image}
               source={{
                 uri: image.slideimage,
@@ -113,15 +113,14 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     flex: 1,
-    backgroundColor: COLORS.MAINCOLOR,
+    backgroundColor: COLORS.WHITE,
   },
   paginationStyle: {
-    flex: 1,
-    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+    //flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
     backgroundColor: 'rgba(0,0,0,.5)',
     borderRadius: ROUNDED_BORDER,
-    bottom: 5,
-    marginStart: SCREEN_WIDTH / 2,
+    bottom: 10,
+    marginStart: (SCREEN_WIDTH * 0.98) / 2.65,
   },
   activeDot: {
     backgroundColor: COLORS.WHITE,

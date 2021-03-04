@@ -66,7 +66,7 @@ export {CategorySubHeader};
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT / 12,
+    height: SCREEN_HEIGHT / 13,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

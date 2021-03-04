@@ -4,7 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {ChangeAmountEnum} from '../../../components';
 import IncreaseAndDecreaseAmount from '../../../components/IncreaseAndDecrease';
-import {COLORS} from '../../../constants/style';
+import {COLORS, COMMON_STYLES} from '../../../constants/style';
 import {ROUNDED_BORDER} from '../../../constants/style/sizes';
 import {cartContext} from '../../../contexts';
 import {Product} from '../../../interfaces';
@@ -51,7 +51,7 @@ const IncreaseAndAddToCart = ({id, data, selectedProductOptions}: Props) => {
       <IncreaseAndDecreaseAmount
         amount={amount}
         onChangeAmount={onChangeAmount}
-        containerStyle={styles.increaseDecreaseContainer}
+        containerStyle={COMMON_STYLES.increaseDecreaseContainerNonCircular}
         circular={false}
         quantity={+data.quantity!}
       />
@@ -86,10 +86,5 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: ROUNDED_BORDER,
     borderRadius: ROUNDED_BORDER,
     backgroundColor: COLORS.MAINCOLOR,
-  },
-  increaseDecreaseContainer: {
-    borderWidth: 0.4,
-    borderColor: COLORS.MOCK_BG_GRAY,
-    backgroundColor: COLORS.WHITE,
   },
 });

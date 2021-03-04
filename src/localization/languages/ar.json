@@ -2,9 +2,10 @@
   "tabs": {
     "home": "الرئيسيه",
     "categories": "الأقسام",
-    "cart": "السله",
+    "cart": "سله المشتريات",
     "account": "الحساب",
-    "offers": "العروض"
+    "offers": "العروض",
+    "more": "المزيد"
   },
   "homeScreen": {
     "searchPlaceHolder": "ما الذي تريد البحث عنه"
@@ -68,12 +69,15 @@
   },
   "cart": {
     "payNow": "إدفع الأن",
-    "total": "المجموع",
+    "total": "الإجمالي",
     "emptyText": "لايوجد منتجات في السله"
   },
 
   "general": {
-    "apply": "تطبيق"
+    "apply": "تطبيق",
+    "refresh": "تحديث {{name}} ",
+    "edit": "تعديل",
+    "delete": "حذف"
   },
   "inputs": {
     "firstName": "الإسم الأول",

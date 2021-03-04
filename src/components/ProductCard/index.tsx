@@ -85,9 +85,9 @@ const ProductCard = ({
   };
   const onChangeAmount = (type: ChangeAmountEnum) => {
     if (type == ChangeAmountEnum.INCREASE) {
-      setamount((prev) => (amount < quantity ? prev + 1 : quantity));
+      setamount((prev) => (prev < quantity ? prev + 1 : quantity));
     } else {
-      setamount((prev) => (amount > 1 ? prev - 1 : 1));
+      setamount((prev) => (prev > 1 ? prev - 1 : 1));
     }
   };
   return (
@@ -138,7 +138,7 @@ const ProductCard = ({
           onChangeAmount={onChangeAmount}
           amount={amount}
           itemKey={+id}
-          quantity={quantity}
+          quantity={+quantity}
         />
       </View>
 
@@ -159,7 +159,7 @@ export {ProductCard};
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH / 2 - 15,
-    height: SCREEN_HEIGHT / 2,
+    height: SCREEN_HEIGHT / 1.9,
     backgroundColor: COLORS.WHITE,
     justifyContent: 'space-between',
     marginEnd: 5,
@@ -167,9 +167,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   carsoulContainer: {
-    height: '50%',
+    height: '55%',
     width: '100%',
-    // backgroundColor: '#892',
   },
   bodyContainer: {
     flex: 1,

@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {IconButton} from 'react-native-paper';
-import {COLORS} from '../../constants/style';
+import {COLORS, COMMON_STYLES} from '../../constants/style';
 import {ROUNDED_BORDER, SCREEN_WIDTH} from '../../constants/style/sizes';
 import {formatNumbers} from '../../utils';
 import {CustomText} from '../customText';
@@ -41,7 +41,6 @@ const IncreaseAndDecreaseAmount = ({
         style={[
           styles.counterSignIcon,
           {
-            opacity: amount == initialAmount ? 0.2 : 1,
             borderWidth: circular ? 1 : 0,
             borderRadius: circular ? ROUNDED_BORDER : 0,
             margin: 0,
@@ -63,7 +62,7 @@ const IncreaseAndDecreaseAmount = ({
         <TextInput
           editable={false}
           value={`${formatNumbers(amount)}`}
-          style={styles.input}
+          style={[COMMON_STYLES.counterInput]}
         />
         {/* <CustomText text={`${amount}`} textStyle={{color: COLORS.MAINCOLOR}} /> */}
       </View>
@@ -75,7 +74,6 @@ const IncreaseAndDecreaseAmount = ({
         style={[
           styles.counterSignIcon,
           {
-            opacity: amount == initialAmount ? 0.2 : 1,
             borderWidth: circular ? 1 : 0,
             borderRadius: circular ? ROUNDED_BORDER : 0,
             margin: 0,
@@ -101,13 +99,5 @@ const styles = StyleSheet.create({
   },
   counterSignIcon: {
     borderColor: COLORS.MAINCOLOR,
-  },
-  input: {
-    textTransform: 'capitalize',
-    paddingHorizontal: 0,
-    fontFamily: 'Cairo-Regular',
-    color: COLORS.MAINCOLOR,
-    flex: 1,
-    textAlign: 'center',
   },
 });

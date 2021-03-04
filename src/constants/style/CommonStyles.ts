@@ -33,6 +33,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  counterInput: {
+    textTransform: 'capitalize',
+    paddingHorizontal: 0,
+    fontFamily: 'Cairo-Regular',
+    color: COLORS.MAINCOLOR,
+    flex: 1,
+    textAlign: 'center',
+    height: '100%',
+    justifyContent: 'center',
+    paddingBottom: 0,
+    paddingTop: 0,
+  },
+  increaseDecreaseContainerNonCircular: {
+    borderWidth: 0.4,
+    borderColor: COLORS.MOCK_BG_GRAY,
+    backgroundColor: COLORS.WHITE,
+  },
 });
 
 export default styles;

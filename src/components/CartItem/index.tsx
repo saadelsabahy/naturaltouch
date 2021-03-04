@@ -1,12 +1,18 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, TextInput, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {COLORS} from '../../constants/style';
-import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
+import {COLORS, COMMON_STYLES} from '../../constants/style';
+import {
+  ROUNDED_BORDER,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from '../../constants/style/sizes';
 import {CustomText} from '../customText';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IncreaseAndDecreaseAmount from '../IncreaseAndDecrease';
 import {ChangeAmountEnum} from '../ProductCard';
+import {formatNumbers} from '../../utils';
+import {Button, Text} from 'react-native-paper';
+import {useTranslation} from 'react-i18next';
 interface Props {
   price: string;
   name: string;
@@ -19,6 +25,7 @@ interface Props {
 
   onChangeAmount: (quantity: number, key: number) => void;
   itemKey: number;
+  onRefresh: () => void;
 }
 
 const CartItem = ({
@@ -32,7 +39,9 @@ const CartItem = ({
   amount,
   onChangeAmount,
   itemKey,
+  onRefresh,
 }: Props) => {
+  const {t} = useTranslation();
   // const [amount, setamount] = useState<number>(initialAmount);
 
   /* const decreaseAmount = () =>{
@@ -73,90 +82,54 @@ const CartItem = ({
           style={[styles.image]}
           resizeMode={FastImage.resizeMode.stretch}
         />
-      </View>
 
-      <View style={[styles.itemDetailesContainer]}>
-        <View style={[styles.detailesTopContainer]}>
-          <View style={[styles.itemNameContainer]}>
-            <CustomText text={name} numberOfLines={2} />
-          </View>
-
-          <Pressable
-            style={({pressed}) => [
-              styles.deleteIconContainer,
-              {opacity: pressed ? 0.7 : 1},
-            ]}
-            onPress={onDeleteItemPressed}>
-            <Icon name="close" size={20} color={COLORS.MAINCOLOR} />
-          </Pressable>
-        </View>
-
-        <View style={[styles.detailesBottomContainer]}>
-          <View style={[styles.counterAndPriceContainer]}>
-            <View style={[styles.priceContainer]}>
-              {price && <CustomText text={price} textStyle={styles.price} />}
-            </View>
-            <IncreaseAndDecreaseAmount
-              amount={amount}
-              onChangeAmount={onChangeCartItemAmount}
-            />
-            {/*  <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-              }}>
-              <Pressable
-                style={({pressed}) => [
-                  styles.counterSignContainer,
-                  {opacity: pressed ? 0.7 : 1},
-                ]}
-                onPress={() =>
-                  onChangeAmount(
-                    amount <= initialAmount ? initialAmount : +amount - 1,
-                    itemKey,
-                  )
-                }>
-                <Icon
-                  name="minus"
-                  size={20}
-                  color={COLORS.WHITE}
-                  style={styles.counterSignIcon}
-                />
-              </Pressable>
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <CustomText
-                  text={`${amount}`}
-                  textStyle={{color: COLORS.MAINCOLOR}}
-                />
-              </View>
-              <Pressable
-                style={({pressed}) => [
-                  styles.counterSignContainer,
-                  {opacity: pressed ? 0.7 : 1},
-                ]}
-                onPress={() =>
-                  onChangeAmount(
-                    amount < initialAmount ? initialAmount : +amount + 1,
-                    itemKey,
-                  )
-                }>
-                <Icon
-                  name="plus-thick"
-                  size={20}
-                  color={COLORS.WHITE}
-                  style={styles.counterSignIcon}
-                />
-              </Pressable>
-            </View> */}
-          </View>
+        <View style={[styles.itemNameContainer]}>
+          <CustomText text={name} numberOfLines={3} />
         </View>
       </View>
+
+      <IncreaseAndDecreaseAmount
+        amount={amount}
+        onChangeAmount={onChangeCartItemAmount}
+        containerStyle={COMMON_STYLES.increaseDecreaseContainerNonCircular}
+        circular={false}
+        //quantity={+data.quantity!}
+      />
+      <View style={styles.priceContainer}>
+        <View style={styles.priceandButtonContainer}>
+          <View style={{justifyContent: 'flex-start'}}>
+            <Text style={styles.priceTitle}>
+              {t('categoriesDetailesScreen:price')}
+            </Text>
+            <Text>{price}</Text>
+          </View>
+          <Button
+            onPress={onItemPressed}
+            mode="outlined"
+            style={{borderRadius: ROUNDED_BORDER, marginStart: 0}}>
+            {t('general:edit')}
+          </Button>
+        </View>
+
+        <View style={styles.priceandButtonContainer}>
+          <View style={{justifyContent: 'flex-start'}}>
+            <Text style={styles.priceTitle}>{t('cart:total')}</Text>
+            <Text>{price}</Text>
+          </View>
+          <Button
+            onPress={onDeleteItemPressed}
+            mode="outlined"
+            style={{borderRadius: ROUNDED_BORDER, marginStart: 0}}>
+            {t('general:delete')}
+          </Button>
+        </View>
+      </View>
+
+      <Button
+        mode="outlined"
+        style={{width: '100%', borderRadius: ROUNDED_BORDER}}>
+        {t('general:refresh', {name: t('tabs:cart')})}
+      </Button>
     </Pressable>
   );
 };
@@ -166,19 +139,23 @@ export {CartItem};
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH * 0.97,
-    height: SCREEN_HEIGHT / 5,
+    height: SCREEN_HEIGHT * 0.7,
     backgroundColor: COLORS.WHITE,
-    alignSelf: 'flex-end',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignSelf: 'center',
     alignItems: 'center',
+    justifyContent: 'space-evenly',
     borderRadius: 5,
     overflow: 'hidden',
     marginVertical: 4,
   },
   imageContainer: {
-    width: '30%',
-    height: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    width: '100%',
+    height: '30%',
+    marginBottom: 5,
+    //backgroundColor: 'red',
   },
   image: {
     flex: 1,
@@ -195,7 +172,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemNameContainer: {
-    width: '80%',
+    width: '60%',
     alignItems: 'flex-start',
   },
   deleteIconContainer: {
@@ -210,6 +187,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // backgroundColor: '#ccc',
   },
+  priceTitle: {
+    color: COLORS.MAINCOLOR,
+    marginBottom: 5,
+  },
   counterAndPriceContainer: {
     backgroundColor: COLORS.GRAY_LIGHT,
     borderTopStartRadius: 5,
@@ -220,10 +201,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   priceContainer: {
-    width: '50%',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    marginHorizontal: 5,
+    width: '90%',
+    height: SCREEN_HEIGHT / 6,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  priceandButtonContainer: {
+    flex: 1,
+    marginEnd: 10,
+    justifyContent: 'space-between',
   },
   price: {
     color: COLORS.MAINCOLOR,
