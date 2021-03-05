@@ -16,7 +16,7 @@ const CategoryNameAndAvatar = ({name, avatar, item, onItemPressed}: Props) => {
     <Pressable style={[styles.container]} onPress={() => onItemPressed(item)}>
       {avatar && (
         <Avatar.Image
-          size={80}
+          size={60}
           theme={theme}
           style={{marginVertical: 2}}
           source={{
@@ -39,5 +39,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WHITE,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: 5,
   },
 });

@@ -53,7 +53,13 @@ const CustomSwiper = ({
       //loadMinimal={true}
       automaticallyAdjustContentInsets={true}
       showsButtons={showButtons}
-      paginationStyle={[styles.paginationStyle, {width: 20 * images.length}]}
+      paginationStyle={[
+        styles.paginationStyle,
+        {
+          width: 20 * images.length,
+          marginStart: (SCREEN_WIDTH * 0.98 - 20 * images.length) / 2.1,
+        },
+      ]}
       buttonWrapperStyle={{
         flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
       }}
@@ -120,7 +126,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,.5)',
     borderRadius: ROUNDED_BORDER,
     bottom: 10,
-    marginStart: (SCREEN_WIDTH * 0.98) / 2.65,
   },
   activeDot: {
     backgroundColor: COLORS.WHITE,

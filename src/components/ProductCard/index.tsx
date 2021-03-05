@@ -159,7 +159,7 @@ export {ProductCard};
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH / 2 - 15,
-    height: SCREEN_HEIGHT / 1.9,
+    height: SCREEN_HEIGHT / 1.8,
     backgroundColor: COLORS.WHITE,
     justifyContent: 'space-between',
     marginEnd: 5,

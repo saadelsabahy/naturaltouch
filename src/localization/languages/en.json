@@ -3,7 +3,7 @@
     "home": "home",
     "categories": "categories",
     "cart": "shopping cart",
-    "account": "account",
+    "account": "my account",
     "offers": "offers",
     "more": "more"
   },
@@ -49,8 +49,8 @@
   "accountScreen": {
     "personalInformation": "personal information",
     "changeMyPassword": "change my password",
-    "favourite": "favourite",
-    "myPurchases": "my purchases",
+    "favourite": "wishlist",
+    "myOrders": "my ordes",
     "customerServices": "customer services",
     "hotLine": "hot line",
     "support": "support",
@@ -117,5 +117,9 @@
   "localization": {
     "language": "english",
     "chooseLang": "choose your language"
+  },
+  "moreScreen": {
+    "notifications": "notifications",
+    "welcome": "welcome,"
   }
 }

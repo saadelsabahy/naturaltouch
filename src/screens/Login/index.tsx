@@ -67,12 +67,12 @@ const Login = ({navigation}: Props) => {
 
   const onSignInSuccess = async (data) => {
     const {
-      customer: {firstname, lastname, password, customer_id},
+      customer: {firstname, lastname, password, customer_id, email},
       is_logged,
     } = data?.data;
     if (customer_id) {
       await authContext.signIn({
-        userName: `${firstname} ${lastname}`,
+        userData: {name: `${firstname} ${lastname}`, email},
         userToken: password,
       });
       reset();

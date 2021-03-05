@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Account, ForgetPassword, Login, Register} from '../screens';
+import {ForgetPassword, Login, Register} from '../screens';
 import {createStackNavigator} from '@react-navigation/stack';
 
 const Auth = createStackNavigator();

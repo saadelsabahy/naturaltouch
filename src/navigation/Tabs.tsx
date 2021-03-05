@@ -4,7 +4,7 @@ import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
-import {Account, Cart, Categories, Home, Offers} from '../screens';
+import {Cart, Categories, Home, More, Offers} from '../screens';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {COLORS} from '../constants/style';
 import AuthStack from './AuthStack';
@@ -41,7 +41,6 @@ const tabBarOPtions = ({
           color={focused ? COLORS.WHITE : color}
           name={iconName}
           size={iconSize || 24}
-          style={{}}
         />
       </View>
     ),
@@ -64,7 +63,7 @@ const Tabs = () => {
       }}>
       <Tab.Screen
         name="More"
-        component={Account}
+        component={More}
         options={{
           ...tabBarOPtions({
             iconName: 'menu',
@@ -122,6 +121,7 @@ const Tabs = () => {
 const styles = StyleSheet.create({
   tabBarText: {
     textTransform: 'capitalize',
+    fontSize: 10,
   },
 });
 

@@ -47,7 +47,7 @@ const MyPurchases = ({navigation}: Props) => {
   reactotron.log(data, isLoading);
   return (
     <View style={[styles.container]}>
-      <CustomHeader title={t('accountScreen:myPurchases')} />
+      <CustomHeader title={t('accountScreen:myOrders')} />
       {isLoading && <Loader />}
       {data && (
         <FlatList

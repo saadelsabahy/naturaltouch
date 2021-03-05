@@ -6,7 +6,7 @@ import {
   RESTORE_TOKEN,
   USER_TOKEN,
   STORE_DATA,
-  USER_NAME,
+  USER_DATA,
   SIGN_UP,
   FIRST_INSTALL,
 } from './types';
@@ -42,6 +42,7 @@ interface AuthContextInitialStateTypes {
   settings?: settingsTypes;
   cookie?: string;
   userName: string;
+  email: string;
   firstInstall?: boolean;
 }
 const initialState: AuthContextInitialStateTypes = {
@@ -50,6 +51,7 @@ const initialState: AuthContextInitialStateTypes = {
   userToken: null,
   storeToken: null,
   userName: '',
+  email: '',
 };
 
 type AuthReducerActionType =
@@ -88,7 +90,8 @@ const reducer = (
         storeToken: payload.storeToken,
         settings: payload.settings,
         cookie: payload.cookie,
-        userName: payload.userName,
+        userName: payload.userData.name,
+        email: payload.userData.email,
         isSignout: !!payload.userToken,
         firstInstall: !!payload.firstInstall,
       };
@@ -99,7 +102,8 @@ const reducer = (
         userToken: payload,
         isLoading: false,
         isSignout: false,
-        userName: payload.userName,
+        userName: payload.userData.name,
+        email: payload.userData.email,
       };
       break;
     case SIGN_OUT:
@@ -121,14 +125,14 @@ const AuthContext: React.FC = ({children}: {children?: ReactNode}) => {
 
   const authContext: AuthContextType = React.useMemo(
     () => ({
-      signIn: async ({userToken, userName}) => {
+      signIn: async ({userToken, userData}) => {
         await AsyncStorage.setItem(USER_TOKEN, userToken);
-        await AsyncStorage.setItem(USER_NAME, userName);
-        dispatch({type: SIGN_IN, payload: {userToken, userName}});
+        await AsyncStorage.setItem(USER_DATA, JSON.stringify(userData));
+        dispatch({type: SIGN_IN, payload: {userToken, userData}});
       },
       signOut: async () => {
         await AsyncStorage.removeItem(USER_TOKEN);
-        await AsyncStorage.removeItem(USER_NAME);
+        await AsyncStorage.removeItem(USER_DATA);
         dispatch({type: SIGN_OUT});
       },
       signUp: async ({userName, token}) => {
@@ -140,8 +144,9 @@ const AuthContext: React.FC = ({children}: {children?: ReactNode}) => {
       restoreToken: async (data) => {
         const userToken = await AsyncStorage.getItem(USER_TOKEN);
         const storeData = await AsyncStorage.getItem(STORE_DATA);
-        const userName = await AsyncStorage.getItem(USER_NAME);
+        const userData = await AsyncStorage.getItem(USER_DATA);
         const firstInstall = await AsyncStorage.getItem(FIRST_INSTALL);
+        const parsedUserData = !!userData ? await JSON.parse(userData) : {};
         try {
           if (storeData) {
             const parseStoreData: storeDataTypes = await JSON.parse(storeData);
@@ -153,7 +158,7 @@ const AuthContext: React.FC = ({children}: {children?: ReactNode}) => {
                 userToken,
                 storeToken: parseStoreData.token,
                 ...parseStoreData,
-                userName,
+                userData: parsedUserData,
                 firstInstall: !!firstInstall,
               },
             });

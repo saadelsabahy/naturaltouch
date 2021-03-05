@@ -24,7 +24,11 @@ import {useLanguage} from '../../hooks/useLanguage';
 import TopCard from './TopCard';
 interface Props {}
 const TOP_CART_HEIGHT = SCREEN_HEIGHT / 5;
-const headerComponent = (userName: string, userToken: boolean) => (
+const headerComponent = (
+  userName: string,
+  userToken: boolean,
+  email: string,
+) => (
   <View style={[styles.headerContainer]}>
     {userToken && userName && (
       <View style={styles.logedInUserInfoContainer}>
@@ -37,19 +41,19 @@ const headerComponent = (userName: string, userToken: boolean) => (
         />
         {!!userName && (
           <View style={styles.userNameContainer}>
-            <CustomText text={userName} textStyle={styles.userName} />
-            <CustomText text={userName} textStyle={styles.email} />
-            <CustomText text={userName} textStyle={styles.userName} />
+            <Text style={styles.userName}>{userName}</Text>
+            <Text style={styles.email}>{email}</Text>
+            <Text style={styles.userName}>{userName}</Text>
           </View>
         )}
       </View>
     )}
   </View>
 );
-const Account = ({navigation}: Props) => {
+const More = ({navigation}: Props) => {
   const {t} = useTranslation();
   const {
-    state: {userName, userToken},
+    state: {userName, email, userToken},
     authContext,
   } = useContext(AuthenticationContext);
   const Axios = useAxios();
@@ -62,14 +66,8 @@ const Account = ({navigation}: Props) => {
   };
   const {data, isLoading, isError} = useQuery('customerService', getContactUs);
 
-  const onAccordionPressed = (name: string) => {
-    console.log(name);
-
-    if (name == t('accountScreen:favourite')) {
-      navigation.navigate('Favourites');
-    } else {
-      navigation.navigate('PurchasesStack');
-    }
+  const onMyordersPressed = () => {
+    navigation.navigate('PurchasesStack');
   };
   return (
     <View style={{flex: 1, backgroundColor: COLORS.MAINCOLOR}}>
@@ -90,23 +88,54 @@ const Account = ({navigation}: Props) => {
         />
         {userToken && (
           <View style={{flex: 1, justifyContent: 'center'}}>
-            {headerComponent(userName, !!userToken)}
+            {headerComponent(
+              `${t('moreScreen:welcome')} ${userName} !`,
+              !!userToken,
+              email,
+            )}
           </View>
         )}
       </View>
 
       <ScrollView
         style={styles.body}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollViewContentContainer}>
+        {!!userToken && (
+          <View
+            style={{
+              height: TOP_CART_HEIGHT,
+              width: '100%',
+              position: 'absolute',
+            }}>
+            <TopCard />
+          </View>
+        )}
         <View
-          style={{
-            height: TOP_CART_HEIGHT,
-            width: '100%',
-            position: 'absolute',
-          }}>
-          <TopCard />
-        </View>
-        <View style={styles.contentContainer}>
+          style={[
+            styles.contentContainer,
+            {
+              marginTop: userToken ? TOP_CART_HEIGHT / 2 : 0,
+              paddingTop: userToken ? TOP_CART_HEIGHT / 2 : 0,
+            },
+          ]}>
+          {!!userToken && (
+            <MoreItem
+              title={t('tabs:account')}
+              sections={[
+                {
+                  name: t('tabs:account'),
+                  icon: 'account-circle',
+                  onPress: () => {},
+                },
+                {
+                  name: t('accountScreen:myOrders'),
+                  icon: 'cart-arrow-down',
+                  onPress: onMyordersPressed,
+                },
+              ]}
+            />
+          )}
           {!!!userToken && (
             <MoreItem
               sections={[
@@ -170,7 +199,7 @@ const Account = ({navigation}: Props) => {
   );
 };
 
-export {Account};
+export {More};
 
 const styles = StyleSheet.create({
   header: {
@@ -197,11 +226,9 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     justifyContent: 'space-between',
-    borderTopStartRadius: 35,
-    borderTopEndRadius: 35,
+    borderTopStartRadius: 25,
+    borderTopEndRadius: 25,
     backgroundColor: COLORS.WHITE,
-    marginTop: TOP_CART_HEIGHT / 2,
-    paddingTop: TOP_CART_HEIGHT / 2,
   },
   logedInUserInfoContainer: {
     width: '100%',

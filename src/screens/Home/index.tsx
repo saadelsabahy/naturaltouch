@@ -107,7 +107,9 @@ const Home: React.FC<Props> = ({navigation}) => {
                       onImagePressed={onHomeItemPressed}
                     />
                   </Section>
-                  <Section key={section.SectionCodeName + 'footerCategories'}>
+                  <Section
+                    container={{marginHorizontal: 5}}
+                    key={section.SectionCodeName + 'footerCategories'}>
                     <HorizontalList
                       data={categories}
                       keyExtractor={(item, index) => `${item.category_id}`}

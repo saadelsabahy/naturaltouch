@@ -82,6 +82,7 @@ const ProductSegment = ({
         ]}
         labelStyle={{
           color: index == selectedIndex ? COLORS.MAINCOLOR : COLORS.BLACK,
+          fontSize: 10,
         }}>
         {segment}
       </Button>

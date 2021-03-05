@@ -3,7 +3,7 @@
     "home": "الرئيسيه",
     "categories": "الأقسام",
     "cart": "سله المشتريات",
-    "account": "الحساب",
+    "account": "حسابي",
     "offers": "العروض",
     "more": "المزيد"
   },
@@ -12,7 +12,7 @@
   },
   "drawer": {
     "menu": "القائمه",
-    "close": "غلق"
+    "close": "اغلاق"
   },
   "caregoriesScreen": {},
   "categoriesDetailesScreen": {
@@ -32,7 +32,7 @@
     "reset": "حذف الكل"
   },
   "favouriteScreen": {
-    "favourite": "المفضله",
+    "favourite": "قائمه الأمنيات",
     "emptyText": "لايوجد منتجات مفضله"
   },
   "productScreen": {
@@ -49,8 +49,8 @@
   "accountScreen": {
     "personalInformation": "المعلومات الشخصيه",
     "changeMyPassword": "تغير كلمه المرور",
-    "favourite": "المفضله",
-    "myPurchases": "مشترياتي",
+    "favourite": "قائمه الأمنيات",
+    "myOrders": "طلباتي",
     "customerServices": "خدمه العملاء",
     "hotLine": "الخط الساخن",
     "support": "الدعم",
@@ -117,5 +117,9 @@
   "localization": {
     "language": "العربيه",
     "chooseLang": "اختر لغتك"
+  },
+  "moreScreen": {
+    "notifications": "التنبيهات",
+    "welcome": "أهلا بك,"
   }
 }

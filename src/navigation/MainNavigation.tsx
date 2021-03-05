@@ -4,7 +4,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Tabs} from './Tabs';
 import {
   Search,
-  Account,
   Product,
   CategoryDetailes,
   Favourites,
