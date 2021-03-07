@@ -30,3 +30,4 @@ export * from './FilterFromTo';
 export * from './AddReviewModal';
 export * from './IncreaseAndDecrease';
 export * from './MoreItem';
+export * from './AccountInfo';

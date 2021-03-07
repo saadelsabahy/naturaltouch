@@ -74,10 +74,11 @@
   },
 
   "general": {
-    "apply": "apply",
+    "applyChanges": "apply changes",
     "refresh": "refresh {{name}}",
     "edit": "edit",
-    "delete": "delete"
+    "delete": "delete",
+    "editPassword": "edit password"
   },
   "inputs": {
     "firstName": "first name",

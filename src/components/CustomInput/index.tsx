@@ -37,7 +37,7 @@ const CustomInput = ({
         style={[styles.input, inputStyle]}
         theme={{roundness: 7}}
         underlineColor={COLORS.GRAY}
-        underlineHeight={0.5}
+        underlineHeight={0.2}
         ref={reference}
         render={(innerProps) => (
           <NativeTextInput
@@ -70,7 +70,7 @@ export {CustomInput};
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 5,
+    marginVertical: 10,
   },
   fieldName: {
     fontSize: 17,
@@ -80,6 +80,8 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT / 12,
     textTransform: 'uppercase',
     paddingHorizontal: 5,
+    backgroundColor: '#F9F9F9',
+    borderBottomWidth: 0.2,
     // borderRadius: 10,
   },
   helperText: {

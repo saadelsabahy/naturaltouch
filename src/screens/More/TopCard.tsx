@@ -30,18 +30,23 @@ const TopCard = (props: Props) => {
   const onFavouritesPressed = () => {
     navigation.navigate('Favourites');
   };
+
+  const onNotificationsPressed = () => {
+    navigation.navigate('Notifications');
+  };
   return (
     <View style={styles.container}>
       <IconWithText
         icon={'bell-outline'}
         text={t('moreScreen:notifications')}
+        onPress={onNotificationsPressed}
       />
       <IconWithText
         icon={'heart-box-outline'}
         text={t('accountScreen:favourite')}
         onPress={onFavouritesPressed}
       />
-      <IconWithText icon={'bell'} text={'notification'} />
+      {/* <IconWithText icon={'bell'} text={'notification'} /> */}
     </View>
   );
 };

@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {CustomInput} from '../../components';
-import {SCREEN_WIDTH} from '../../constants/style/sizes';
+import {ROUNDED_BORDER, SCREEN_WIDTH} from '../../constants/style/sizes';
 import COMMON_STYLES from '../../constants/style/CommonStyles';
 import {Button} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
@@ -17,7 +17,7 @@ const defaultValues = {
   newPassword: '',
   confirmPassword: '',
 };
-const ChangePassword = (props: Props) => {
+const EditPassword = (props: Props) => {
   const {t} = useTranslation();
   const Axios = useAxios();
   const {showSnackbar} = useContext(SnackBarContext);
@@ -108,17 +108,17 @@ const ChangePassword = (props: Props) => {
       />
       <Button
         mode="contained"
-        style={[COMMON_STYLES.deleteBorderRadius]}
+        style={[{borderRadius: ROUNDED_BORDER, marginVertical: 10}]}
         labelStyle={[COMMON_STYLES.whiteText]}
         onPress={handleSubmit(onApplyChanges)}
         loading={isLoading}>
-        {t('general:apply')}
+        {t('general:applyChanges')}
       </Button>
     </View>
   );
 };
 
-export default ChangePassword;
+export default EditPassword;
 
 const styles = StyleSheet.create({
   container: {

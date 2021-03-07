@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {StyleSheet, View, I18nManager} from 'react-native';
+import {StyleSheet, View, I18nManager, Pressable} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button, TextInput} from 'react-native-paper';
 import {
@@ -158,15 +158,21 @@ const Login = ({navigation}: Props) => {
                 onPress={onForgetPasswordPressed}
               />
             </View>
-
-            <Button
+            <Pressable
+              style={({pressed}) => [
+                COMMON_STYLES.authButtonWithArrow,
+                {opacity: pressed ? 0.7 : 1},
+              ]}
+              onPress={handleSubmit(onSignIn)}>
+              {() => LoginArrow({isLoading})}
+            </Pressable>
+            {/*  <Button
               mode="contained"
-              style={[COMMON_STYLES.authButtonWithArrow]}
-              onPress={handleSubmit(onSignIn)}
+             
               loading={isLoading}
               icon={(props) => LoginArrow(props)}
               labelStyle={[COMMON_STYLES.whiteText]}
-            />
+            /> */}
           </View>
         </View>
       </KeyboardAwareScrollView>

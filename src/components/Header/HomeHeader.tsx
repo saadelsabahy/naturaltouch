@@ -86,7 +86,11 @@ const HomeHeader = ({
                 {cartProducts.products.length}
               </Badge>
             )}
-            <Icon name={'shopping-basket'} {...props} />
+            <Icon
+              name={'shopping-basket'}
+              {...props}
+              color={COLORS.GRAY_LIGHT}
+            />
           </>
         )}
         onPress={goToCart}

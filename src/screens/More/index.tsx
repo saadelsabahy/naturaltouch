@@ -9,7 +9,13 @@ import {
 } from 'react-native';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import {Avatar, Button, IconButton, List, Text} from 'react-native-paper';
-import {CustomText, HeaderImage, Loader, MoreItem} from '../../components';
+import {
+  AccountInfo,
+  CustomText,
+  HeaderImage,
+  Loader,
+  MoreItem,
+} from '../../components';
 import {COLORS} from '../../constants/style';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
 import ChangePassword from './ChangePassword';
@@ -24,32 +30,7 @@ import {useLanguage} from '../../hooks/useLanguage';
 import TopCard from './TopCard';
 interface Props {}
 const TOP_CART_HEIGHT = SCREEN_HEIGHT / 5;
-const headerComponent = (
-  userName: string,
-  userToken: boolean,
-  email: string,
-) => (
-  <View style={[styles.headerContainer]}>
-    {userToken && userName && (
-      <View style={styles.logedInUserInfoContainer}>
-        <Avatar.Image
-          source={{
-            uri: '',
-          }}
-          size={50}
-          style={{backgroundColor: COLORS.WHITE}}
-        />
-        {!!userName && (
-          <View style={styles.userNameContainer}>
-            <Text style={styles.userName}>{userName}</Text>
-            <Text style={styles.email}>{email}</Text>
-            <Text style={styles.userName}>{userName}</Text>
-          </View>
-        )}
-      </View>
-    )}
-  </View>
-);
+
 const More = ({navigation}: Props) => {
   const {t} = useTranslation();
   const {
@@ -88,11 +69,7 @@ const More = ({navigation}: Props) => {
         />
         {userToken && (
           <View style={{flex: 1, justifyContent: 'center'}}>
-            {headerComponent(
-              `${t('moreScreen:welcome')} ${userName} !`,
-              !!userToken,
-              email,
-            )}
+            <AccountInfo />
           </View>
         )}
       </View>
@@ -126,7 +103,7 @@ const More = ({navigation}: Props) => {
                 {
                   name: t('tabs:account'),
                   icon: 'account-circle',
-                  onPress: () => {},
+                  onPress: () => navigation.navigate('Account'),
                 },
                 {
                   name: t('accountScreen:myOrders'),
@@ -205,7 +182,7 @@ const styles = StyleSheet.create({
   header: {
     height: SCREEN_HEIGHT / 7,
     width: SCREEN_WIDTH,
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     //alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -217,11 +194,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  headerContainer: {
-    height: SCREEN_HEIGHT / 13,
-    width: '90%',
-    alignItems: 'center',
-  },
   contentContainer: {
     flex: 1,
     width: '100%',
@@ -229,29 +201,5 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 25,
     borderTopEndRadius: 25,
     backgroundColor: COLORS.WHITE,
-  },
-  logedInUserInfoContainer: {
-    width: '100%',
-    alignSelf: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    //top: -40,
-    //backgroundColor: '#ddd',
-    height: '100%',
-  },
-  userNameContainer: {
-    marginStart: 10,
-    height: '95%',
-    justifyContent: 'center',
-  },
-  userName: {
-    textTransform: 'uppercase',
-    fontSize: 17,
-    color: COLORS.WHITE,
-  },
-  email: {
-    fontSize: 14,
-    color: COLORS.WHITE,
   },
 });

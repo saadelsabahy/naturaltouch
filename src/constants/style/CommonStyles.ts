@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: COLORS.MAINCOLOR,
   },
   counterInput: {
     textTransform: 'capitalize',

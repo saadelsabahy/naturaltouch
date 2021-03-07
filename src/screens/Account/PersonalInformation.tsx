@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {CustomInput} from '../../components';
-import {SCREEN_WIDTH} from '../../constants/style/sizes';
+import {ROUNDED_BORDER, SCREEN_WIDTH} from '../../constants/style/sizes';
 import COMMON_STYLES from '../../constants/style/CommonStyles';
 import {useForm, Controller} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
@@ -10,19 +10,26 @@ import validation from '../../utils/validation';
 import {useMutation} from 'react-query';
 import {endpoints} from '../../constants/apiEndpoints.constants';
 import useAxios from '../../hooks/useAxios';
-import {SnackBarContext} from '../../contexts';
+import {AuthenticationContext, SnackBarContext} from '../../contexts';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props {}
-const defaultValues = {
-  email: '',
-  personalInfoPass: '',
-  firstName: '',
-  lastName: '',
-};
+
 const PersonalInformation = (props: Props) => {
   const {t} = useTranslation();
   const Axios = useAxios();
+  const navigation = useNavigation();
   const {showSnackbar} = useContext(SnackBarContext);
+  const {
+    state: {email, userName},
+  } = useContext(AuthenticationContext);
+  const defaultValues = {
+    email: email,
+    personalInfoPass: '',
+    firstName: userName,
+    lastName: userName,
+  };
   const {handleSubmit, errors, reset, control} = useForm({
     mode: 'all',
     reValidateMode: 'onBlur',
@@ -66,9 +73,7 @@ const PersonalInformation = (props: Props) => {
             onChangeText={(value) => onChange(value)}
             onBlur={onBlur}
             value={value}
-            placeholder={t('inputs:placeholder', {
-              fieldName: t('inputs:firstName'),
-            })}
+            label={t('inputs:firstName')}
           />
         )}
         name="firstName"
@@ -84,9 +89,7 @@ const PersonalInformation = (props: Props) => {
             onChangeText={(value) => onChange(value)}
             onBlur={onBlur}
             value={value}
-            placeholder={t('inputs:placeholder', {
-              fieldName: t('inputs:lastName'),
-            })}
+            label={t('inputs:lastName')}
           />
         )}
         name="lastName"
@@ -102,9 +105,7 @@ const PersonalInformation = (props: Props) => {
             onChangeText={(value) => onChange(value)}
             onBlur={onBlur}
             value={value}
-            placeholder={t('inputs:placeholder', {
-              fieldName: t('inputs:email'),
-            })}
+            label={t('inputs:email')}
           />
         )}
         name="email"
@@ -122,9 +123,7 @@ const PersonalInformation = (props: Props) => {
             onBlur={onBlur}
             value={value}
             secureTextEntry
-            placeholder={t('inputs:placeholder', {
-              fieldName: t('inputs:password'),
-            })}
+            label={t('inputs:password')}
           />
         )}
         name="personalInfoPass"
@@ -132,11 +131,19 @@ const PersonalInformation = (props: Props) => {
       />
       <Button
         mode="contained"
-        style={[COMMON_STYLES.deleteBorderRadius]}
+        style={styles.button}
         labelStyle={[COMMON_STYLES.whiteText]}
         onPress={handleSubmit(onApplyChanges)}
         loading={isLoading}>
-        {t('general:apply')}
+        {t('general:applyChanges')}
+      </Button>
+      <Button
+        mode="contained"
+        style={styles.button}
+        labelStyle={[COMMON_STYLES.whiteText]}
+        onPress={() => navigation.navigate('ChangePassword')}
+        loading={isLoading}>
+        {t('general:editPassword')}
       </Button>
     </View>
   );
@@ -146,8 +153,10 @@ export default PersonalInformation;
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: 'space-evenly',
     width: SCREEN_WIDTH * 0.9,
     alignSelf: 'center',
     marginVertical: 10,
   },
+  button: {borderRadius: ROUNDED_BORDER, marginVertical: 10},
 });

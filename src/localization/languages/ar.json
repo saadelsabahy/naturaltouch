@@ -74,9 +74,10 @@
   },
 
   "general": {
-    "apply": "تطبيق",
+    "applyChanges": "حفظ التعديلات",
     "refresh": "تحديث {{name}} ",
     "edit": "تعديل",
+    "editPassword": "تعديل كلمه المرور",
     "delete": "حذف"
   },
   "inputs": {
