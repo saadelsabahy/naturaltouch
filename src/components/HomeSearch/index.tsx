@@ -31,7 +31,7 @@ const HomeSearch = ({onFocus, ...props}: Props) => {
               icon="magnify"
               onPress={onFocus}
               style={{marginBottom: 0}}
-              color={COLORS.GRAY_LIGHT}
+              color={COLORS.GRAY}
             />
           }
           render={(innerProps) => (
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingBottom: 5,
     borderWidth: 0.7,
-    borderColor: COLORS.GRAY_LIGHT,
+    borderColor: COLORS.GRAY,
   },
   searchContainer: {
     width: '100%',

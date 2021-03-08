@@ -31,3 +31,5 @@ export * from './AddReviewModal';
 export * from './IncreaseAndDecrease';
 export * from './MoreItem';
 export * from './AccountInfo';
+export * from './NotificationsItem';
+export * from './WishlistItem';

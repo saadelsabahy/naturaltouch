@@ -185,6 +185,7 @@ const AuthContext: React.FC = ({children}: {children?: ReactNode}) => {
                 settings,
                 cookie,
                 firstInstall: !!firstInstall,
+                userData: {},
               },
             });
           }

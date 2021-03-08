@@ -15,6 +15,7 @@ import {
   Loader,
   ProductCard,
   SortItemsList,
+  WhishlistItem,
 } from '../../components';
 import {COLORS} from '../../constants/style';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../constants/style/sizes';
@@ -45,7 +46,15 @@ const Favourites = ({navigation}: Props) => {
   };
   const renderProductCardItem = ({item}) => {
     return (
-      <ProductCard
+      <WhishlistItem
+        onItemPressed={() => onProductPressed(item.product_id)}
+        name={item.name}
+        image={item.image}
+        price={`${item.price}`.trim()}
+        onRefresh={() => reftchFavourites()}
+        id={item.product_id}
+      />
+      /*    <ProductCard
         onProductPressed={() => onProductPressed(item.product_id)}
         containerStyle={{
           width: '50%',
@@ -55,27 +64,22 @@ const Favourites = ({navigation}: Props) => {
         rating={item?.rating}
         price={`${item.price}`.trim()}
         id={item.product_id}
-      />
+      /> */
     );
   };
   return (
     <View style={{flex: 1}}>
-      <CustomHeader
-        style={{elevation: 0}}
-        title={t('favouriteScreen:favourite')}
-      />
+      <CustomHeader />
 
       <View style={styles.listContainer}>
         {loadingFavourite && <Loader />}
         {!!favourites && (
           <FlatlistWithCustomScrollIndicator
-            numColumns={2}
-            key={2}
             data={favourites}
             keyExtractor={(item, index: number) => `${item.product_id}`}
             renderItem={renderProductCardItem}
             refresh={fetchingFavourites}
-            onPullToRefresh={async () => await reftchFavourites()}
+            onPullToRefresh={() => reftchFavourites()}
             ListEmptyComponent={
               <EmptyList emptyText={t('favouriteScreen:emptyText')} />
             }
@@ -93,7 +97,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '99%',
     alignSelf: 'center',
-    backgroundColor: 'red',
   },
   listContentContainer: {
     /* flexGrow: 1,
